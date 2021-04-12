@@ -1,4 +1,4 @@
-package org.coeg.routine;
+package org.coeg.routine.activities;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -13,6 +13,13 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+
+import org.coeg.routine.fragments.AnalyticFragment;
+import org.coeg.routine.fragments.DashboardFragment;
+import org.coeg.routine.fragments.ListFragment;
+import org.coeg.routine.R;
+import org.coeg.routine.fragments.SettingFragment;
+import org.coeg.routine.adapters.ViewPagerAdapter;
 
 import java.util.Objects;
 

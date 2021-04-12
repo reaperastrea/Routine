@@ -1,4 +1,4 @@
-package org.coeg.routine;
+package org.coeg.routine.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.imageview.ShapeableImageView;
+
+import org.coeg.routine.animations.AccuracyAnimation;
+import org.coeg.routine.R;
 
 public class AnalyticFragment extends Fragment
 {

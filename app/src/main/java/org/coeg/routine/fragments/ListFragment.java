@@ -1,4 +1,4 @@
-package org.coeg.routine;
+package org.coeg.routine.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.coeg.routine.R;
+import org.coeg.routine.activities.AddRoutineActivity;
 
 public class ListFragment extends Fragment
 {

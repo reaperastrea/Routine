@@ -1,4 +1,4 @@
-package org.coeg.routine;
+package org.coeg.routine.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.os.Looper;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import org.coeg.routine.R;
 
 public class SplashActivity extends AppCompatActivity
 {

@@ -1,4 +1,4 @@
-package org.coeg.routine;
+package org.coeg.routine.activities;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -17,6 +17,8 @@ import ca.antonious.materialdaypicker.MaterialDayPicker;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.shawnlin.numberpicker.NumberPicker;
+
+import org.coeg.routine.R;
 
 public class AddRoutineActivity extends AppCompatActivity
 {

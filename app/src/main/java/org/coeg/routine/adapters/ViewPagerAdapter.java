@@ -1,4 +1,4 @@
-package org.coeg.routine;
+package org.coeg.routine.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

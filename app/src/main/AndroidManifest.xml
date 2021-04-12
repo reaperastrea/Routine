@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Routine">
         <activity
-            android:name=".SplashActivity"
+            android:name=".activities.SplashActivity"
             android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,13 +18,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FirstSetupActivity"
+            android:name=".activities.FirstSetupActivity"
             android:theme="@style/FirstSetup"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:theme="@style/Theme.Routine"/>
         <activity
-            android:name=".AddRoutineActivity"
+            android:name=".activities.AddRoutineActivity"
             android:windowSoftInputMode="adjustPan"/>
 
         <meta-data

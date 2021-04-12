@@ -1,4 +1,4 @@
-package org.coeg.routine;
+package org.coeg.routine.animations;
 
 import android.annotation.SuppressLint;
 import android.view.animation.Animation;
