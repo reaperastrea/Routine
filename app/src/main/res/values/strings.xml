@@ -1,3 +1,63 @@
 <resources>
+
     <string name="app_name">Routine</string>
+    <string name="nunito_extrabold">nunito_extrabold</string>
+    <string name="number_picker_formatter">%02d</string>
+
+    <!-- Splash -->
+    <string name="desc_logo">Routine logo</string>
+
+    <!-- Main -->
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_analytic">Analytics</string>
+    <string name="title_setting">Settings</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_name">Name</string>
+    <string name="title_routine">Routine</string>
+    <string name="title_accuracy">Accuracy (monthly)</string>
+    <string name="label_userAccuracy">Accuracy</string>
+    <string name="title_onTime">On Time</string>
+    <string name="title_late">Late</string>
+    <string name="title_recentRoutine">Recent Routine</string>
+    <string name="desc_status">Routine Status Logo</string>
+    <string name="title_routineList">Routine List</string>
+    <string name="desc_btn_add">Add Button</string>
+    <string name="title_settingGeneral">General</string>
+    <string name="setting_privacy">Help improve our product by sending optional diagnostic data</string>
+    <string name="setting_editProfile">Edit profile picture and or display name</string>
+    <string name="title_settingNotification">Notification</string>
+    <string name="setting_pushNotification">Routine push notification</string>
+    <string name="setting_pushPreNotification">Routine pre remainder push notification</string>
+    <string name="title_settingDangerZone">Danger Zone</string>
+    <string name="setting_deleteAllRoutine">Delete all routine</string>
+    <string name="setting_deleteAllAnalytics">Delete all analytics data</string>
+    <string name="setting_deleteResetAll">Reset all data and start fresh</string>
+
+    <!-- First time setup -->
+    <string name="title_first_setup">First time setup</string>
+    <string name="title_edit_profile">Edit profile</string>
+    <string name="desc_profile_image">Profile image</string>
+    <string name="text_add_image">Click \nto add \nimage</string>
+    <string name="hint_display_name">Display name</string>
+    <string name="btn_start_tracking">Start Tracking</string>
+    <string name="btn_update_profile">Update Profile</string>
+
+    <!-- Add routine -->
+    <string name="title_add_routine">Add Routine</string>
+    <string name="hint_routine_name">Routine name</string>
+    <string name="hint_allow_snoozing">Allow snoozing</string>
+    <string name="desc_btn_exit">Exit button</string>
+    <string name="text_time_divider">:</string>
+
+    <!-- Placeholder -->
+    <string name="placeholder_name">Shioriko Mifune</string>
+    <string name="placeholder_routineCount">30</string>
+    <string name="placeholder_accuracy">100%</string>
+    <string name="placeholder_onTimeCount">30</string>
+    <string name="placeholder_lateCount">0</string>
+    <string name="placeholder_routineName">Club Practice</string>
+    <string name="placeholder_routineStatus">On Time</string>
+    <string name="placeholder_routineTime">15:00</string>
+    <string name="placeholder_routineDay">Monday</string>
+
 </resources>
