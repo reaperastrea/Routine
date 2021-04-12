@@ -23,6 +23,9 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.Routine"/>
+        <activity
+            android:name=".AddRoutineActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
