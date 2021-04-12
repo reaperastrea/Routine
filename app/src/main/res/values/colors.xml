@@ -7,4 +7,30 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white_20">#E2EFCA</color>
+
+    <color name="horizontal_line">#EBEBEB</color>
+
+    <color name="gray_100">#c9c9c9</color>
+    <color name="gray_200">#b2b5ae</color>
+    <color name="gray_300">#939690</color>
+
+    <color name="green_100">#f3ffc6</color>
+    <color name="green_200">#d2f099</color>
+    <color name="green_300">#c8ed84</color>
+    <color name="green_400">#c3eb78</color>
+    <color name="green_500">#B1D66D</color>
+    <color name="green_600">#92b15a</color>
+
+    <color name="dayPressed">@color/white</color>
+    <color name="daySelected">@color/white</color>
+    <color name="daySelectedTextColor">@color/green_500</color>
+    <color name="dayDeselected">@android:color/transparent</color>
+    <color name="dayDeselectedTextColor">@color/white</color>
+
+    <!-- Customizing colors for disabled days-->
+    <color name="daySelectedAndDisabled">#43444F</color>
+    <color name="daySelectedAndDisabledTextColor">@color/daySelectedTextColor</color>
+    <color name="dayDeselectedAndDisabled">@color/dayDeselected</color>
+    <color name="dayDeselectedAndDisabledTextColor">@android:color/darker_gray</color>
 </resources>
