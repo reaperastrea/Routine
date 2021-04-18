@@ -9,11 +9,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.coeg.routine.adapters.RoutineListAdapter;
 import org.coeg.routine.animations.AccuracyAnimation;
 import org.coeg.routine.R;
+import org.coeg.routine.backend.Routine;
+
+import java.util.LinkedList;
 
 public class DashboardFragment extends Fragment
 {
@@ -23,6 +29,8 @@ public class DashboardFragment extends Fragment
     private TextView        txtAccuracy;
     private ProgressBar     pbAccuracy;
     private RecyclerView    rvRecentRoutine;
+    RoutineListAdapter mAdapter;
+    LinkedList<Routine> routineList = new LinkedList<>();
 
     public DashboardFragment() { }
 
@@ -30,6 +38,11 @@ public class DashboardFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         InitView(view);
+        routineListTest();
+        mAdapter = new RoutineListAdapter(this.getContext(), routineList);
+        rvRecentRoutine.setAdapter(mAdapter);
+        rvRecentRoutine.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
     }
 
     @Override
@@ -66,5 +79,9 @@ public class DashboardFragment extends Fragment
         AccuracyAnimation pbAnim = new AccuracyAnimation(pbAccuracy, txtAccuracy, 0, accuracy);
         pbAnim.setDuration(ANIMATION_DURATION);
         pbAccuracy.startAnimation(pbAnim);
+    }
+
+    public void routineListTest(){
+        //routineList.add(new Routine());
     }
 }
