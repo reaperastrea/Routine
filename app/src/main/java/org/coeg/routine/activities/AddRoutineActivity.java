@@ -1,6 +1,7 @@
 package org.coeg.routine.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -9,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -22,6 +24,7 @@ import org.coeg.routine.R;
 
 public class AddRoutineActivity extends AppCompatActivity
 {
+    private TextView            tvHeader;
     private Button              btnAddRoutine;
     private ImageButton         btnExit;
 
@@ -68,6 +71,7 @@ public class AddRoutineActivity extends AppCompatActivity
      */
     private void InitView()
     {
+        tvHeader        = findViewById(R.id.header);
         btnAddRoutine   = findViewById(R.id.btn_addRoutine);
         btnExit         = findViewById(R.id.btn_exit);
         npHour          = findViewById(R.id.picker_hour);
@@ -82,6 +86,12 @@ public class AddRoutineActivity extends AppCompatActivity
 
         npMinute.setTypeface(ResourcesCompat.getFont(this, R.font.nunito_extrabold));
         npMinute.setSelectedTypeface(ResourcesCompat.getFont(this, R.font.nunito_extrabold));
+
+        //Set The Header Text View's Content
+        Intent intent = getIntent();
+        if(intent.getStringExtra("Update Routine").equals("Update Routine")){
+            tvHeader.setText("Update Routine");
+        }
     }
 
     /**
