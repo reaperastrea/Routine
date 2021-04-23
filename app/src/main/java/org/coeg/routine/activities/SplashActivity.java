@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import org.coeg.routine.R;
+import org.coeg.routine.backend.PreferencesStorage;
 
 public class SplashActivity extends AppCompatActivity
 {
@@ -59,8 +61,7 @@ public class SplashActivity extends AppCompatActivity
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        startActivity(new Intent(SplashActivity.this, FirstSetupActivity.class));
-                        overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                        CheckForConfig();
                     }
                 }, SPLASH_DELAY);
             }
@@ -79,5 +80,36 @@ public class SplashActivity extends AppCompatActivity
     private void PlayAnimation()
     {
         logo.startAnimation(expandIn);
+    }
+
+    /**
+     * Check whether user had undergone the first time setup
+     */
+    private void CheckForConfig()
+    {
+        PreferencesStorage preferences = PreferencesStorage.getInstance();
+        preferences.loadPreferences(getApplicationContext());
+
+        if (preferences.getUserId() == -1)
+        {
+            GoToFirstSetup();
+            return;
+        }
+
+        GoToMainActivity();
+    }
+
+    private void GoToMainActivity()
+    {
+        finish();
+        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+    }
+
+    private void GoToFirstSetup()
+    {
+        finish();
+        startActivity(new Intent(SplashActivity.this, FirstSetupActivity.class));
+        overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
     }
 }
