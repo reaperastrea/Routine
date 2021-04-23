@@ -22,17 +22,42 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <TextView
-            android:id="@+id/txt_titleFirstSetup"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/nunito_extrabold"
-            android:text="@string/title_first_setup"
-            android:textColor="@color/white"
-            android:textSize="35sp"
+            android:gravity="fill_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/txt_titleFirstSetup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:fontFamily="@font/nunito_extrabold"
+                android:text="@string/title_first_setup"
+                android:textColor="@color/white"
+                android:textSize="35sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_exit"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:visibility="invisible"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/desc_btn_exit"
+                android:background="@drawable/square_rounded"
+                android:src="@drawable/ic_exit"
+                android:tint="@color/green_500" />
+
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_userImage"
@@ -42,14 +67,14 @@
             android:layout_marginTop="45dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_titleFirstSetup">
+            app:layout_constraintTop_toBottomOf="@+id/layout_title">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/img_inputUserImage"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="280dp"
+                android:layout_height="280dp"
                 android:layout_gravity="center"
-                android:background="@drawable/square_rounded"
+                android:background="@android:color/white"
                 android:contentDescription="@string/desc_profile_image"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -57,6 +82,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/labelAddImage"
                 android:layout_width="150dp"
                 android:layout_height="110dp"
                 android:fontFamily="@font/nunito_extrabold"
