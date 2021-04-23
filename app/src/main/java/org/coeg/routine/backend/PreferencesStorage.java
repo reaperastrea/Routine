@@ -73,6 +73,13 @@ public class PreferencesStorage {
 
     public int getUserId() { return userId; }
     public String getFullName() { return userFullName; }
+
+    /**
+     * Get image path stored in internal storage
+     * @return profile picture path
+     * @deprecated
+     */
+    @Deprecated
     public String getProfilePicturePath() { return profilePicturePath; }
     public int getOnTimeCounter() { return onTimeCounter; }
     public int getLateCounter() { return lateCounter; }
