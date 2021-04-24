@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="org.coeg.routine.PreferencesTest" tests="5" failures="0" errors="0" skipped="0" time="0.263" timestamp="2021-04-12T17:01:51" hostname="localhost">
+  <properties>
+    <property name="device" value="Redmi Note 6 Pro - 11" />
+    <property name="flavor" value="debugAndroidTest" />
+    <property name="project" value="app" />
+  </properties>
+  <testcase name="testPreferences" classname="org.coeg.routine.PreferencesTest" time="0.026" />
+  <testcase name="writeMultipleRoutinesAndRead" classname="org.coeg.routine.RoutineDatabaseTest" time="0.129" />
+  <testcase name="writeRoutineAndRead" classname="org.coeg.routine.RoutineDatabaseTest" time="0.026" />
+  <testcase name="updateRoutine" classname="org.coeg.routine.RoutineDatabaseTest" time="0.026" />
+  <testcase name="deleteRoutine" classname="org.coeg.routine.RoutineDatabaseTest" time="0.026" />
+</testsuite>
