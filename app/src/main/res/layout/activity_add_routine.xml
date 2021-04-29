@@ -141,8 +141,7 @@
                 android:theme="@style/Routine.DayPicker"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:selectionMode="ca.antonious.materialdaypicker.SingleSelectionMode" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/et_inputRoutineName"
