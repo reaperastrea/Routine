@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = { Routine.class }, version = 1)
+@Database(entities = { Routine.class, History.class }, version = 1, exportSchema = false)
 public abstract class RoutineDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "Routine";
     private static volatile RoutineDatabase instance;
@@ -23,4 +23,5 @@ public abstract class RoutineDatabase extends RoomDatabase {
     }
 
     protected abstract RoutineDao routineDao();
+    protected abstract HistoryDao historyDao();
 }

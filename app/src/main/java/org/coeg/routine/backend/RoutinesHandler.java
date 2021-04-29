@@ -22,14 +22,17 @@ public class RoutinesHandler {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "Routine";
-    private static final String TABLE = "routines";
+    private static final String TABLE_ROUTINES = "routines";
+    private static final String TABLE_HISTORY = "history";
 
     private RoutineDatabase db;
     private RoutineDao routineDao;
+    private HistoryDao historyDao;
 
     public RoutinesHandler(Context context) {
         db = RoutineDatabase.getInstance(context);
         routineDao = db.routineDao();
+        historyDao = db.historyDao();
     }
 
     public void close() {
@@ -40,9 +43,13 @@ public class RoutinesHandler {
         return routineDao.getRoutineById(id);
     }
 
+    public History getHistory(int id) { return historyDao.getHistoryById(id); }
+
     public List<Routine> getAllRoutines() {
         return routineDao.getAll();
     }
+
+    public List<History> getAllHistory() { return historyDao.getAll(); }
 
     public void addRoutine(Routine routine) {
         routineDao.insertRoutine(routine);
@@ -52,19 +59,29 @@ public class RoutinesHandler {
         routineDao.insertRoutine(routine);
     }
 
+    public void addHistory(History history) { historyDao.insertHistory(history); }
+
+    public void addHistory(History... history) { historyDao.insertHistory(history); }
+
     public void updateRoutine(Routine routine) {
         routineDao.updateRoutine(routine);
     }
+
+    public void updateHistory(History history) { historyDao.updateHistory(history); }
 
     public void deleteRoutine(Routine routine) {
         routineDao.deleteRoutine(routine);
     }
 
+    public void deleteHistory(History history) { historyDao.deleteHistory(history); }
+
     public void deleteAllRoutines() {
         routineDao.deleteAll();
     }
 
-    public int getContactsCount() {
-        return routineDao.getAll().size();
-    }
+    public void deleteAllHistory() { historyDao.deleteAll(); }
+
+    public int getRoutineCount() { return routineDao.getAll().size(); }
+
+    public int getHistoryCount() { return historyDao.getAll().size(); }
 }
