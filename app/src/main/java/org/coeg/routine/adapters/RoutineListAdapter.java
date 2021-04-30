@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.coeg.routine.R;
 import org.coeg.routine.activities.AddRoutineActivity;
+import org.coeg.routine.backend.Days;
 import org.coeg.routine.backend.Routine;
 
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
     private LinkedList<Routine> mRoutineList;
     private LayoutInflater mInflater;
     private Context mContext;
+    private int count = 0;
 
     public RoutineListAdapter(Context context, LinkedList<Routine> routineList){
         this.mContext = context;
@@ -41,6 +43,74 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
         Routine mRoutine = mRoutineList.get(position);
         holder.tvName.setText(mRoutine.getName());
         holder.tvTime.setText(mRoutine.getTime().toString().substring(0,5));
+
+        count = 0;
+        Days[] days = new Days[] { Days.Monday, Days.Tuesday, Days.Wednesday, Days.Thursday, Days.Friday, Days.Saturday, Days.Sunday };
+        Days[] routineDays = mRoutine.getDays();
+        StringBuilder builder = new StringBuilder();
+
+        if(routineDays.length > 1 && routineDays.length < 7){
+            for(int i = 0; i < routineDays.length; i++) {
+                if(routineDays[count].equals(days[i])){
+                    count++;
+                    switch (i){
+                        case 1:
+                            builder.append("Mon");
+                            break;
+                        case 2:
+                            builder.append("Tue");
+                            break;
+                        case 3:
+                            builder.append("Wed");
+                            break;
+                        case 4:
+                            builder.append("Thu");
+                            break;
+                        case 5:
+                            builder.append("Fri");
+                            break;
+                        case 6:
+                            builder.append("Sat");
+                            break;
+                        case 7:
+                            builder.append("Sun");
+                            break;
+                    }
+                }
+                if (i < (routineDays.length-1)){
+                    builder.append(",");
+                }
+            }
+            holder.tvDay.setText(builder.toString());
+        }else if(routineDays.length == 1){
+            switch (routineDays[0]){
+                case Monday:
+                    holder.tvDay.setText("Monday");
+                    break;
+                case Tuesday:
+                    holder.tvDay.setText("Tuesday");
+                    break;
+                case Wednesday:
+                    holder.tvDay.setText("Wednesday");
+                    break;
+                case Thursday:
+                    holder.tvDay.setText("Thursday");
+                    break;
+                case Friday:
+                    holder.tvDay.setText("Friday");
+                    break;
+                case Saturday:
+                    holder.tvDay.setText("Saturday");
+                    break;
+                case Sunday:
+                    holder.tvDay.setText("Sunday");
+                    break;
+            }
+        }else if(routineDays.length == 7){
+            holder.tvDay.setText("Everyday");
+        }else{
+            holder.tvDay.setText("Error");
+        }
     }
 
     @Override
