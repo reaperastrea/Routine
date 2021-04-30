@@ -15,6 +15,7 @@ import org.coeg.routine.R;
 import org.coeg.routine.activities.AddRoutineActivity;
 import org.coeg.routine.backend.Routine;
 
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 
 public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.RoutinesViewHolder> {
@@ -39,8 +40,7 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
     public void onBindViewHolder(@NonNull RoutinesViewHolder holder, int position) {
         Routine mRoutine = mRoutineList.get(position);
         holder.tvName.setText(mRoutine.getName());
-        holder.tvDay.setText(mRoutine.getTime().toString());
-        holder.tvTime.setText(mRoutine.getTime().toString());
+        holder.tvTime.setText(mRoutine.getTime().toString().substring(0,5));
     }
 
     @Override
