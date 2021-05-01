@@ -1,5 +1,6 @@
 package org.coeg.routine.fragments;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +20,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import org.coeg.routine.adapters.RoutineListAdapter;
 import org.coeg.routine.animations.AccuracyAnimation;
 import org.coeg.routine.R;
+import org.coeg.routine.backend.InternalStorage;
 import org.coeg.routine.backend.PreferencesStorage;
 import org.coeg.routine.backend.Routine;
 
@@ -36,7 +37,7 @@ public class DashboardFragment extends Fragment
     private RecyclerView        rvRecentRoutine;
 
     private String  name;
-    private String  profilePicturePath;
+    private Bitmap  profilePicture;
     private Integer lateCount;
     private Integer onTimeCount;
     private Integer routineCount;
@@ -56,7 +57,6 @@ public class DashboardFragment extends Fragment
         mAdapter = new RoutineListAdapter(this.getContext(), routineList);
         rvRecentRoutine.setAdapter(mAdapter);
         rvRecentRoutine.setLayoutManager(new LinearLayoutManager(this.getContext()));
-
     }
 
     @Override
@@ -81,10 +81,9 @@ public class DashboardFragment extends Fragment
         // Set view data from database
         txtName.setText(name);
         txtAccuracy.setText(accuracy.toString());
-        imgUser.setImageBitmap(BitmapFactory.decodeFile(profilePicturePath));
+        imgUser.setImageBitmap(profilePicture);
 
         //Play animation according
-        //int accuracy = 100;         // FOR DEBUG PURPOSE //I've made the global variable version of this - ivan
         PlayAnimation(accuracy);
     }
 
@@ -99,18 +98,30 @@ public class DashboardFragment extends Fragment
         pbAccuracy.startAnimation(pbAnim);
     }
 
-    public void routineListTest(){
+    public void routineListTest()
+    {
         //routineList.add(new Routine());
     }
 
-    private void FetchPreferences(){
+    private void FetchPreferences()
+    {
         PreferencesStorage preferences = PreferencesStorage.getInstance();
+        InternalStorage internalStorage = new InternalStorage(getContext());
         preferences.loadPreferences(this.getContext());
+
         name = preferences.getFullName();
-        profilePicturePath = preferences.getProfilePicturePath();
+        profilePicture = internalStorage.GetImageFromInternalStorage();
         lateCount = preferences.getLateCounter();
         onTimeCount = preferences.getOnTimeCounter();
-        routineCount = lateCount+onTimeCount;
-        accuracy = (onTimeCount/routineCount)*100;
+
+        routineCount = lateCount + onTimeCount;
+
+        if (routineCount != 0)
+        {
+            accuracy = (onTimeCount / routineCount) * 100;
+            return;
+        }
+
+        accuracy = 0;
     }
 }

@@ -77,7 +77,7 @@ public class PreferencesStorage {
     /**
      * Get image path stored in internal storage
      * @return profile picture path
-     * @deprecated
+     * @deprecated Use internal storage class instead
      */
     @Deprecated
     public String getProfilePicturePath() { return profilePicturePath; }
