@@ -76,6 +76,7 @@ public class ListFragment extends Fragment
     private void fetchDatabase() {
         Context context = this.getContext();
         handler = new RoutinesHandler(context);
+        // Need to run async
         routines = (LinkedList<Routine>) handler.getAllRoutines();
     }
 }
