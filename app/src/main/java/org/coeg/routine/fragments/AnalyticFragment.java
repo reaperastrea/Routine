@@ -1,5 +1,6 @@
 package org.coeg.routine.fragments;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 import org.coeg.routine.animations.AccuracyAnimation;
 import org.coeg.routine.R;
+import org.coeg.routine.backend.PreferencesStorage;
 
 public class AnalyticFragment extends Fragment
 {
@@ -28,11 +30,19 @@ public class AnalyticFragment extends Fragment
     private ProgressBar         pbAccuracy;
     private ShapeableImageView  imgUser;
 
+    private String  name;
+    private String  profilePicturePath;
+    private Integer lateCount;
+    private Integer onTimeCount;
+    private Integer routineCount;
+    private Integer accuracy;
+
     public AnalyticFragment() { }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
+        FetchPreferences();
         InitView(view);
     }
 
@@ -59,9 +69,15 @@ public class AnalyticFragment extends Fragment
         imgUser             = view.findViewById(R.id.imgUser);
 
         // Set view data from database
+        txtName.setText(name);
+        txtRoutineCount.setText(routineCount.toString());
+        txtOnTimeCount.setText(onTimeCount.toString());
+        txtLateCount.setText(lateCount.toString());
+        txtAccuracy.setText(accuracy.toString());
+        imgUser.setImageBitmap(BitmapFactory.decodeFile(profilePicturePath));
 
         //Play animation according
-        int accuracy = 100;         // FOR DEBUG PURPOSE
+        //int accuracy = 100;         // FOR DEBUG PURPOSE //I've made the global variable version of this - ivan
         PlayAnimation(accuracy);
     }
 
@@ -74,5 +90,16 @@ public class AnalyticFragment extends Fragment
         AccuracyAnimation pbAnim = new AccuracyAnimation(pbAccuracy, txtAccuracy, 0, accuracy);
         pbAnim.setDuration(ANIMATION_DURATION);
         pbAccuracy.startAnimation(pbAnim);
+    }
+
+    private void FetchPreferences(){
+        PreferencesStorage preferences = PreferencesStorage.getInstance();
+        preferences.loadPreferences(this.getContext());
+        name = preferences.getFullName();
+        profilePicturePath = preferences.getProfilePicturePath();
+        lateCount = preferences.getLateCounter();
+        onTimeCount = preferences.getOnTimeCounter();
+        routineCount = lateCount+onTimeCount;
+        accuracy = (onTimeCount/routineCount)*100;
     }
 }
