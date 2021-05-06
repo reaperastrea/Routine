@@ -1,6 +1,8 @@
 package org.coeg.routine.activities;
 
+import android.content.Context;
 import android.graphics.PorterDuff;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -14,6 +16,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import org.coeg.routine.backend.Routine;
+import org.coeg.routine.backend.RoutinesHandler;
 import org.coeg.routine.fragments.AnalyticFragment;
 import org.coeg.routine.fragments.DashboardFragment;
 import org.coeg.routine.fragments.ListFragment;
@@ -21,7 +25,13 @@ import org.coeg.routine.R;
 import org.coeg.routine.fragments.SettingFragment;
 import org.coeg.routine.adapters.ViewPagerAdapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -31,6 +41,17 @@ public class MainActivity extends AppCompatActivity
     private View        vwBGTitle;
     private TabLayout   tlNavigation;
     private ViewPager   vpLayout;
+
+    private SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+    //SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+    private RoutinesHandler handler;
+
+    //Testing database input
+    public static int counter = 0;
+    List<Routine> query;
+
+    //Testing executors
+    ExecutorService executorService = Executors.newFixedThreadPool(2);
 
     private final int[] tabIcons = {
             R.drawable.ic_dashboard,
@@ -44,6 +65,8 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        new InsertDummyData().execute(this);
 
         InitView();
 
@@ -162,7 +185,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         // Set the first tab color to green
-        views[0].findViewById(R.id.icon).getBackground().setColorFilter(getApplicationContext().getColor(R.color.green_500), PorterDuff.Mode.SRC_IN);
+        views[0].findViewById(R.id.icon).getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.green_500), PorterDuff.Mode.SRC_IN);
     }
 
     private void setupViewPager(ViewPager viewPager)
@@ -176,5 +199,59 @@ public class MainActivity extends AppCompatActivity
 
         viewPager.setAdapter(adapter);
         viewPager.setPageMargin(200);
+    }
+
+    private class InsertDummyData  extends AsyncTask<Context, Integer, Integer> {
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Integer doInBackground(Context... context) {
+            try{
+                handler = new RoutinesHandler(context[0]);
+                handler.deleteAllRoutines();
+
+                Routine[] routines = {
+                        new Routine(),
+                        new Routine(),
+                        new Routine(),
+                        new Routine()
+                };
+                routines[0].setId(1);
+                routines[0].setName("Talk to senpai");
+                routines[0].setTime(formatter.parse("14:00:00"));
+                routines[0].setActive(true);
+                routines[1].setId(2);
+                routines[1].setName("Get bath");
+                routines[1].setTime(formatter.parse("15:00:00"));
+                routines[1].setActive(true);
+                routines[2].setId(3);
+                routines[2].setName("Nap time");
+                routines[2].setTime(formatter.parse("16:00:00"));
+                routines[2].setActive(true);
+                routines[3].setId(4);
+                routines[3].setName("Weapons check-up");
+                routines[3].setTime(formatter.parse("17:00:00"));
+                routines[3].setActive(true);
+
+                handler.addRoutine(routines);
+
+                //Test database input
+                query = handler.getAllRoutines();
+                if(query.get(0).getName().equals(routines[0].getName())){
+                    counter++;
+                }if(query.get(1).getName().equals(routines[1].getName())){
+                    counter++;
+                }if(query.get(2).getName().equals(routines[2].getName())){
+                    counter++;
+                }if(query.get(3).getName().equals(routines[3].getName())){
+                    counter++;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } return 0;
+        }
     }
 }
