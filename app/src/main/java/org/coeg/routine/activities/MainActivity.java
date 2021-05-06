@@ -47,11 +47,11 @@ public class MainActivity extends AppCompatActivity
     private RoutinesHandler handler;
 
     //Testing database input
-    public static int counter = 0;
-    List<Routine> query;
+    //public static int counter = 0;
+    //List<Routine> query;
 
     //Testing executors
-    ExecutorService executorService = Executors.newFixedThreadPool(2);
+    //ExecutorService executorService = Executors.newFixedThreadPool(2);
 
     private final int[] tabIcons = {
             R.drawable.ic_dashboard,
@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Insert data dummy for testing purposes
         new InsertDummyData().execute(this);
 
         InitView();
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity
 
         // CAUTION: WILL ALWAYS LOAD 4 OF THE PAGES INSTANTLY
         // MIGHT INTRODUCE HUGE PERFORMANCE IMPACT IN THE LONG RUN(?)
-        vpLayout.setOffscreenPageLimit(4);
+        vpLayout.setOffscreenPageLimit(1);
 
         tlNavigation.setupWithViewPager(vpLayout);
         setupTabIcons();
@@ -239,7 +240,7 @@ public class MainActivity extends AppCompatActivity
                 handler.addRoutine(routines);
 
                 //Test database input
-                query = handler.getAllRoutines();
+                /*query = handler.getAllRoutines();
                 if(query.get(0).getName().equals(routines[0].getName())){
                     counter++;
                 }if(query.get(1).getName().equals(routines[1].getName())){
@@ -248,7 +249,7 @@ public class MainActivity extends AppCompatActivity
                     counter++;
                 }if(query.get(3).getName().equals(routines[3].getName())){
                     counter++;
-                }
+                }*/
             } catch (Exception e) {
                 e.printStackTrace();
             } return 0;

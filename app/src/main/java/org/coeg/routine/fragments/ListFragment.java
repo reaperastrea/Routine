@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +33,11 @@ public class ListFragment extends Fragment
     ImageButton         btnAddRoutine;
     RecyclerView        rvRoutineList;
     RoutineListAdapter  mAdapter;
-    LinkedList<Routine> routines = new LinkedList<>();
+    LinkedList<Routine> routines;
     private RoutinesHandler handler;
     private DBFetching dbFetching;
+
+    private Boolean isFetched = false;
 
     private SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
     List<Routine> query;
@@ -48,8 +52,10 @@ public class ListFragment extends Fragment
         //fetchDatabase();
         //dbFetching.fetchingDB(this.getContext());
         new DBAsync().execute(this.getContext());
-        InitView(view);
-        InitListener();
+        if(isFetched){
+            InitView(view);
+            InitListener();
+        }
     }
 
     @Override
@@ -92,9 +98,21 @@ public class ListFragment extends Fragment
 
         @Override
         protected LinkedList<Routine> doInBackground(Context... context) {
+            /*Looper.prepare();
+            Looper.loop();
+            final Handler handlerr = new Handler(Looper.myLooper());
+            handlerr.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Do something after 5s = 5000ms
+
+                }
+            }, 10000);
+            Looper.myLooper().quitSafely();*/
+
             try{
                 handler = new RoutinesHandler(context[0]);
-                routines = (LinkedList<Routine>) handler.getAllRoutines();
+                routines = new LinkedList<>(handler.getAllRoutines());
 
                 Routine[] routinez = {
                         new Routine(),
@@ -143,9 +161,12 @@ public class ListFragment extends Fragment
                     counter++;
                 }
 
+                isFetched = true;
+
             } catch (Exception e) {
                 e.printStackTrace();
-            } return routines;
+            }
+            return routines;
         }
 
         @Override
