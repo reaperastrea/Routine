@@ -22,6 +22,7 @@ public class Routine {
     public int getId() { return id; }
     public String getName() { return name; }
     public Date getTime() { return formatter.parse(time, null); }
+    public String getTimeAsString() { return time; }
     public boolean isActive() { return active; }
     public int getDaysAsInteger() { return days; }
     public Days[] getDays() {
