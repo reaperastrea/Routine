@@ -37,9 +37,9 @@ public class ListFragment extends Fragment
     //private Boolean isFetched = false;
 
     private SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-    List<Routine> query;
+    //List<Routine> query;
 
-    public static int counter = 0;
+    //public static int counter = 0;
 
     public ListFragment() { }
 
@@ -93,23 +93,12 @@ public class ListFragment extends Fragment
 
         @Override
         protected LinkedList<Routine> doInBackground(Context... context) {
-            /*Looper.prepare();
-            Looper.loop();
-            final Handler handlerr = new Handler(Looper.myLooper());
-            handlerr.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    // Do something after 5s = 5000ms
-
-                }
-            }, 10000);
-            Looper.myLooper().quitSafely();*/
-
             try{
                 handler = new RoutinesHandler(context[0]);
                 routines.addAll(handler.getAllRoutines());
 
-                Routine[] routinez = {
+                //Tes input data dummy
+                /*Routine[] routinez = {
                         new Routine(),
                         new Routine(),
                         new Routine(),
@@ -132,10 +121,10 @@ public class ListFragment extends Fragment
                 routinez[3].setTime(formatter.parse("17:00:00"));
                 routinez[3].setActive(true);
 
-                handler.addRoutine(routinez);
+                handler.addRoutine(routinez);*/
 
                 //Test database output
-                query = handler.getAllRoutines();
+                /*query = handler.getAllRoutines();
                 if(query.get(0).getName().equals(routinez[0].getName())){
                     counter++;
                 }if(query.get(1).getName().equals(routinez[1].getName())){
@@ -154,7 +143,7 @@ public class ListFragment extends Fragment
                     counter++;
                 }if(routines.get(3).getName().equals(routinez[3].getName())){
                     counter++;
-                }
+                }*/
 
                 //isFetched = true;
                 mAdapter.notifyItemInserted(0);
