@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.coeg.routine.R;
 import org.coeg.routine.activities.AddRoutineActivity;
 import org.coeg.routine.adapters.RoutineListAdapter;
-import org.coeg.routine.backend.DBFetching;
 import org.coeg.routine.backend.Routine;
 import org.coeg.routine.backend.RoutinesHandler;
 
@@ -33,11 +30,10 @@ public class ListFragment extends Fragment
     ImageButton         btnAddRoutine;
     RecyclerView        rvRoutineList;
     RoutineListAdapter  mAdapter;
-    LinkedList<Routine> routines;
+    private static LinkedList<Routine> routines = new LinkedList<>();
     private RoutinesHandler handler;
-    private DBFetching dbFetching;
 
-    private Boolean isFetched = false;
+    //private Boolean isFetched = false;
 
     private SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
     List<Routine> query;
@@ -52,10 +48,8 @@ public class ListFragment extends Fragment
         //fetchDatabase();
         //dbFetching.fetchingDB(this.getContext());
         new DBAsync().execute(this.getContext());
-        if(isFetched){
-            InitView(view);
-            InitListener();
-        }
+        InitView(view);
+        InitListener();
     }
 
     @Override
@@ -112,7 +106,7 @@ public class ListFragment extends Fragment
 
             try{
                 handler = new RoutinesHandler(context[0]);
-                routines = new LinkedList<>(handler.getAllRoutines());
+                routines.addAll(handler.getAllRoutines());
 
                 Routine[] routinez = {
                         new Routine(),
@@ -161,7 +155,8 @@ public class ListFragment extends Fragment
                     counter++;
                 }
 
-                isFetched = true;
+                //isFetched = true;
+                mAdapter.notifyItemInserted(0);
 
             } catch (Exception e) {
                 e.printStackTrace();
