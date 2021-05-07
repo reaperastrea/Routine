@@ -2,6 +2,7 @@ package org.coeg.routine.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,19 +23,15 @@ import org.coeg.routine.backend.RoutinesHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
+import java.util.List;
 
 public class ListFragment extends Fragment
 {
     ImageButton         btnAddRoutine;
     RecyclerView        rvRoutineList;
     RoutineListAdapter  mAdapter;
-<<<<<<< Updated upstream
-    LinkedList<Routine> routines = new LinkedList<>();
-    private RoutinesHandler handler;
-=======
     private static LinkedList<Routine> routines = new LinkedList<>();
     private RoutinesHandler handler;
-    private DBFetching dbFetching;
 
     //private Boolean isFetched = false;
 
@@ -42,20 +39,15 @@ public class ListFragment extends Fragment
     List<Routine> query;
 
     public static int counter = 0;
->>>>>>> Stashed changes
 
     public ListFragment() { }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
-<<<<<<< Updated upstream
-        fetchDatabase();
-=======
         //fetchDatabase();
         //dbFetching.fetchingDB(this.getContext());
         new DBAsync().execute(this.getContext());
->>>>>>> Stashed changes
         InitView(view);
         InitListener();
     }
@@ -92,13 +84,6 @@ public class ListFragment extends Fragment
         });
     }
 
-<<<<<<< Updated upstream
-    private void fetchDatabase() {
-        Context context = this.getContext();
-        handler = new RoutinesHandler(context);
-        // Need to run async
-        routines = (LinkedList<Routine>) handler.getAllRoutines();
-=======
     private class DBAsync  extends AsyncTask<Context, Integer, LinkedList<Routine>> {
         @Override
         protected void onPreExecute() {
@@ -183,6 +168,5 @@ public class ListFragment extends Fragment
         protected void onPostExecute(LinkedList<Routine> routine) {
 
         }
->>>>>>> Stashed changes
     }
 }
