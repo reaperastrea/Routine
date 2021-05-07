@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import org.coeg.routine.backend.Days;
 import org.coeg.routine.backend.Routine;
 import org.coeg.routine.backend.RoutinesHandler;
 import org.coeg.routine.fragments.AnalyticFragment;
@@ -225,18 +226,40 @@ public class MainActivity extends AppCompatActivity
                 routines[0].setName("Talk to senpai");
                 routines[0].setTime(formatter.parse("14:00:00"));
                 routines[0].setActive(true);
+                routines[0].setDays(new Days[] {
+                        Days.Monday
+                });
                 routines[1].setId(2);
                 routines[1].setName("Get bath");
                 routines[1].setTime(formatter.parse("15:00:00"));
                 routines[1].setActive(true);
+                routines[1].setDays(new Days[] {
+                        Days.Monday,
+                        Days.Tuesday,
+                        Days.Thursday
+                });
                 routines[2].setId(3);
                 routines[2].setName("Nap time");
                 routines[2].setTime(formatter.parse("16:00:00"));
                 routines[2].setActive(true);
+                routines[2].setDays(new Days[] {
+                        Days.Monday,
+                        Days.Tuesday,
+                        Days.Wednesday,
+                        Days.Thursday,
+                        Days.Friday,
+                        Days.Saturday,
+                        Days.Sunday
+                });
                 routines[3].setId(4);
                 routines[3].setName("Weapons check-up");
                 routines[3].setTime(formatter.parse("17:00:00"));
                 routines[3].setActive(true);
+                routines[3].setDays(new Days[] {
+                        Days.Tuesday,
+                        Days.Wednesday,
+                        Days.Friday
+                });
 
                 handler.addRoutine(routines);
 
