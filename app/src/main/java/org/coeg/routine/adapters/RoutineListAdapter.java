@@ -16,7 +16,6 @@ import org.coeg.routine.activities.AddRoutineActivity;
 import org.coeg.routine.backend.Days;
 import org.coeg.routine.backend.Routine;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -27,7 +26,7 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
     private Context mContext;
     private int count = 0;
 
-    private static SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+    //private static SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 
     public RoutineListAdapter(Context context, LinkedList<Routine> routineList){
         this.mContext = context;
@@ -46,11 +45,7 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
     public void onBindViewHolder(@NonNull RoutinesViewHolder holder, int position) {
         Routine mRoutine = mRoutineList.get(position);
         holder.tvName.setText(mRoutine.getName());
-        try {
-            holder.tvTime.setText(Objects.requireNonNull(formatter.parse(mRoutine.getTimeAsString())).toString().substring(0,5));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        holder.tvTime.setText(Objects.requireNonNull(mRoutine.getTimeAsString()).substring(0,5));
 
         count = 0;
         Days[] days = new Days[] { Days.Monday, Days.Tuesday, Days.Wednesday, Days.Thursday, Days.Friday, Days.Saturday, Days.Sunday };

@@ -126,6 +126,6 @@ public class DashboardFragment extends Fragment
             return;
         }
 
-        accuracy = ListFragment.counter;
+        accuracy = 0;
     }
 }

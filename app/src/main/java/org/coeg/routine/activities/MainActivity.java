@@ -202,6 +202,7 @@ public class MainActivity extends AppCompatActivity
         viewPager.setPageMargin(200);
     }
 
+    //Tes input data dummy
     private class InsertDummyData  extends AsyncTask<Context, Integer, Integer> {
         @Override
         protected void onPreExecute() {
