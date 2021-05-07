@@ -28,15 +28,34 @@ public class ListFragment extends Fragment
     ImageButton         btnAddRoutine;
     RecyclerView        rvRoutineList;
     RoutineListAdapter  mAdapter;
+<<<<<<< Updated upstream
     LinkedList<Routine> routines = new LinkedList<>();
     private RoutinesHandler handler;
+=======
+    private static LinkedList<Routine> routines = new LinkedList<>();
+    private RoutinesHandler handler;
+    private DBFetching dbFetching;
+
+    //private Boolean isFetched = false;
+
+    private SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+    List<Routine> query;
+
+    public static int counter = 0;
+>>>>>>> Stashed changes
 
     public ListFragment() { }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
+<<<<<<< Updated upstream
         fetchDatabase();
+=======
+        //fetchDatabase();
+        //dbFetching.fetchingDB(this.getContext());
+        new DBAsync().execute(this.getContext());
+>>>>>>> Stashed changes
         InitView(view);
         InitListener();
     }
@@ -73,10 +92,97 @@ public class ListFragment extends Fragment
         });
     }
 
+<<<<<<< Updated upstream
     private void fetchDatabase() {
         Context context = this.getContext();
         handler = new RoutinesHandler(context);
         // Need to run async
         routines = (LinkedList<Routine>) handler.getAllRoutines();
+=======
+    private class DBAsync  extends AsyncTask<Context, Integer, LinkedList<Routine>> {
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected LinkedList<Routine> doInBackground(Context... context) {
+            /*Looper.prepare();
+            Looper.loop();
+            final Handler handlerr = new Handler(Looper.myLooper());
+            handlerr.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Do something after 5s = 5000ms
+
+                }
+            }, 10000);
+            Looper.myLooper().quitSafely();*/
+
+            try{
+                handler = new RoutinesHandler(context[0]);
+                routines.addAll(handler.getAllRoutines());
+
+                Routine[] routinez = {
+                        new Routine(),
+                        new Routine(),
+                        new Routine(),
+                        new Routine()
+                };
+                routinez[0].setId(1);
+                routinez[0].setName("Talk to senpai");
+                routinez[0].setTime(formatter.parse("14:00:00"));
+                routinez[0].setActive(true);
+                routinez[1].setId(2);
+                routinez[1].setName("Get bath");
+                routinez[1].setTime(formatter.parse("15:00:00"));
+                routinez[1].setActive(true);
+                routinez[2].setId(3);
+                routinez[2].setName("Nap time");
+                routinez[2].setTime(formatter.parse("16:00:00"));
+                routinez[2].setActive(true);
+                routinez[3].setId(4);
+                routinez[3].setName("Weapons check-up");
+                routinez[3].setTime(formatter.parse("17:00:00"));
+                routinez[3].setActive(true);
+
+                handler.addRoutine(routinez);
+
+                //Test database output
+                query = handler.getAllRoutines();
+                if(query.get(0).getName().equals(routinez[0].getName())){
+                    counter++;
+                }if(query.get(1).getName().equals(routinez[1].getName())){
+                    counter++;
+                }if(query.get(2).getName().equals(routinez[2].getName())){
+                    counter++;
+                }if(query.get(3).getName().equals(routinez[3].getName())){
+                    counter++;
+                }
+
+                if(routines.get(0).getName().equals(routinez[0].getName())){
+                    counter++;
+                }if(routines.get(1).getName().equals(routinez[1].getName())){
+                    counter++;
+                }if(routines.get(2).getName().equals(routinez[2].getName())){
+                    counter++;
+                }if(routines.get(3).getName().equals(routinez[3].getName())){
+                    counter++;
+                }
+
+                //isFetched = true;
+                mAdapter.notifyItemInserted(0);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return routines;
+        }
+
+        @Override
+        protected void onPostExecute(LinkedList<Routine> routine) {
+
+        }
+>>>>>>> Stashed changes
     }
 }
