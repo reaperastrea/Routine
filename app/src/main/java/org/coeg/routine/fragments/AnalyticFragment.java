@@ -100,6 +100,11 @@ public class AnalyticFragment extends Fragment
         lateCount = preferences.getLateCounter();
         onTimeCount = preferences.getOnTimeCounter();
         routineCount = lateCount+onTimeCount;
-        accuracy = (onTimeCount/routineCount)*100;
+        if (routineCount != 0)
+        {
+            accuracy = (onTimeCount / routineCount) * 100;
+            return;
+        }
+        accuracy = 0;
     }
 }

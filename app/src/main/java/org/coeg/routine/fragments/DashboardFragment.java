@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.imageview.ShapeableImageView;
 
+import org.coeg.routine.activities.MainActivity;
 import org.coeg.routine.adapters.RoutineListAdapter;
 import org.coeg.routine.animations.AccuracyAnimation;
 import org.coeg.routine.R;
@@ -41,7 +42,7 @@ public class DashboardFragment extends Fragment
     private Integer lateCount;
     private Integer onTimeCount;
     private Integer routineCount;
-    private Integer accuracy;
+    private float accuracy = 0;
 
     RoutineListAdapter mAdapter;
     LinkedList<Routine> routineList = new LinkedList<>();
@@ -80,11 +81,14 @@ public class DashboardFragment extends Fragment
 
         // Set view data from database
         txtName.setText(name);
-        txtAccuracy.setText(accuracy.toString());
+        String auahgelap = String.format("%f %%", accuracy);
+        // accuracy.toString() + "%";
+        // String.format("%f %%", accuracy);
+        txtAccuracy.setText(auahgelap);
         imgUser.setImageBitmap(profilePicture);
 
         //Play animation according
-        PlayAnimation(accuracy);
+        PlayAnimation((int) accuracy);
     }
 
     /**
@@ -122,6 +126,6 @@ public class DashboardFragment extends Fragment
             return;
         }
 
-        accuracy = 0;
+        accuracy = ListFragment.counter;
     }
 }

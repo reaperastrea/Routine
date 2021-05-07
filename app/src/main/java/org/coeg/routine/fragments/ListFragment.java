@@ -30,6 +30,7 @@ public class ListFragment extends Fragment
     ImageButton         btnAddRoutine;
     RecyclerView        rvRoutineList;
     RoutineListAdapter  mAdapter;
+
     private static LinkedList<Routine> routines = new LinkedList<>();
     private RoutinesHandler handler;
 
