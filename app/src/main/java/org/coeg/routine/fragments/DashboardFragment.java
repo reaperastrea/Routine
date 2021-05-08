@@ -1,7 +1,9 @@
 package org.coeg.routine.fragments;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +20,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import org.coeg.routine.activities.MainActivity;
-import org.coeg.routine.adapters.RoutineListAdapter;
+import org.coeg.routine.adapters.RecentRoutinesAdapter;
 import org.coeg.routine.animations.AccuracyAnimation;
 import org.coeg.routine.R;
+import org.coeg.routine.backend.History;
 import org.coeg.routine.backend.InternalStorage;
 import org.coeg.routine.backend.PreferencesStorage;
 import org.coeg.routine.backend.Routine;
+import org.coeg.routine.backend.RoutinesHandler;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 public class DashboardFragment extends Fragment
@@ -44,20 +50,21 @@ public class DashboardFragment extends Fragment
     private Integer routineCount;
     private float accuracy = 0;
 
-    RoutineListAdapter mAdapter;
-    LinkedList<Routine> routineList = new LinkedList<>();
+    RecentRoutinesAdapter mAdapter;
+    private static LinkedList<Routine> routineList = new LinkedList<>();
+    private static LinkedList<History> historyList = new LinkedList<>();
+    private RoutinesHandler handler;
+    private static SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
     public DashboardFragment() { }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
+        new DBAsync().execute(this.getContext());
         FetchPreferences();
         InitView(view);
         routineListTest();
-        mAdapter = new RoutineListAdapter(this.getContext(), routineList);
-        rvRecentRoutine.setAdapter(mAdapter);
-        rvRecentRoutine.setLayoutManager(new LinearLayoutManager(this.getContext()));
     }
 
     @Override
@@ -86,6 +93,10 @@ public class DashboardFragment extends Fragment
         // String.format("%f %%", accuracy);
         txtAccuracy.setText(auahgelap);
         imgUser.setImageBitmap(profilePicture);
+
+        mAdapter = new RecentRoutinesAdapter(this.getContext(), routineList, historyList);
+        rvRecentRoutine.setAdapter(mAdapter);
+        rvRecentRoutine.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         //Play animation according
         PlayAnimation((int) accuracy);
@@ -127,5 +138,37 @@ public class DashboardFragment extends Fragment
         }
 
         accuracy = 0;
+    }
+
+    private class DBAsync  extends AsyncTask<Context, Integer, LinkedList<Routine>> {
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected LinkedList<Routine> doInBackground(Context... context) {
+            try{
+                handler = new RoutinesHandler(context[0]);
+                LinkedList<History> HistoryTemp = new LinkedList<>(handler.getAllHistory());
+                for(int i = 0; i < handler.getHistoryCount(); i++){
+                    if(dateFormatter.format(HistoryTemp.get(i).getDate()).equals(dateFormatter.format(Calendar.getInstance().getTime())) ){
+                        historyList.add(HistoryTemp.get(i));
+                        routineList.add(handler.getRoutine(HistoryTemp.get(1).getRoutineId()));
+                    }
+                }
+
+                mAdapter.notifyItemInserted(0);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return routineList;
+        }
+
+        @Override
+        protected void onPostExecute(LinkedList<Routine> routine) {
+
+        }
     }
 }
