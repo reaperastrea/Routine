@@ -53,38 +53,42 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
         StringBuilder builder = new StringBuilder();
 
         if(routineDays.length > 1 && routineDays.length < 7){
-            for(int i = 0; i < routineDays.length; i++) {
-                if(routineDays[count].equals(days[i])){
+            for(int i = 0; i < days.length; i++) {
+                if(days[i].equals(routineDays[count])){
                     count++;
-                    switch (count){
-                        case 1:
+                    switch (i){
+                        case 0:
                             builder.append("Mon");
                             break;
-                        case 2:
+                        case 1:
                             builder.append("Tue");
                             break;
-                        case 3:
+                        case 2:
                             builder.append("Wed");
                             break;
-                        case 4:
+                        case 3:
                             builder.append("Thu");
                             break;
-                        case 5:
+                        case 4:
                             builder.append("Fri");
                             break;
-                        case 6:
+                        case 5:
                             builder.append("Sat");
                             break;
-                        case 7:
+                        case 6:
                             builder.append("Sun");
                             break;
                     }
+                    if (i < (routineDays.length)){
+                        builder.append(",");
+                    }
                 }
-                if (i < (routineDays.length-1)){
-                    builder.append(",");
+                if(routineDays.length == count){
+                    break;
                 }
             }
             holder.tvDay.setText(builder.toString());
+            builder.setLength(0);
         }else if(routineDays.length == 1){
             switch (routineDays[0]){
                 case Monday:

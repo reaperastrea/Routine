@@ -17,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 import org.coeg.routine.backend.Days;
+import org.coeg.routine.backend.History;
 import org.coeg.routine.backend.Routine;
 import org.coeg.routine.backend.RoutinesHandler;
 import org.coeg.routine.fragments.AnalyticFragment;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity
     private ViewPager   vpLayout;
 
     private SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-    //SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
     private RoutinesHandler handler;
 
     //Testing database input
@@ -262,6 +263,34 @@ public class MainActivity extends AppCompatActivity
                 });
 
                 handler.addRoutine(routines);
+
+                History[] histories = {
+                        new History(),
+                        new History(),
+                        new History(),
+                        new History()
+                };
+                histories[0].setId(1);
+                histories[0].setRoutineId(1);
+                histories[0].setTime(formatter.parse("14:00:00"));
+                histories[0].setDate(dateFormatter.parse("2021-05-08"));
+
+                histories[1].setId(2);
+                histories[1].setRoutineId(3);
+                histories[1].setTime(formatter.parse("16:01:00"));
+                histories[1].setDate(dateFormatter.parse("2021-05-08"));
+
+                histories[2].setId(3);
+                histories[2].setRoutineId(1);
+                histories[2].setTime(formatter.parse("14:01:30"));
+                histories[2].setDate(dateFormatter.parse("2021-05-08"));
+
+                histories[3].setId(4);
+                histories[3].setRoutineId(1);
+                histories[3].setTime(formatter.parse("13:59:00"));
+                histories[3].setDate(dateFormatter.parse("2021-05-08"));
+
+                handler.addHistory(histories);
 
                 //Test database input
                 /*query = handler.getAllRoutines();
