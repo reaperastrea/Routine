@@ -60,4 +60,8 @@
     <string name="placeholder_routineTime">15:00</string>
     <string name="placeholder_routineDay">Monday</string>
 
+    <!-- Notifications -->
+    <string name="notification_ok">OK</string>
+    <string name="notification_snooze">SNOOZE</string>
+
 </resources>
