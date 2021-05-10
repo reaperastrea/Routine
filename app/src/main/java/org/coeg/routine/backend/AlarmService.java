@@ -1,13 +1,18 @@
 package org.coeg.routine.backend;
 
+import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -20,10 +25,15 @@ import org.coeg.routine.activities.MainActivity;
 public class AlarmService extends Service
 {
     public static final String CHANNEL_ID = "ALARM_SERVICE_CHANNEL";
+    public static final String CHANNEL_NAME = "Routine Notification Channel";
+    public static final String CHANNEL_DESC = "Routine Remainder";
     public static final int NOTIFICATION_ID = 1337;
 
     private static final int ACTION_OK = 0;
     private static final int ACTION_SNOOZE = 1;
+
+    private String routineName;
+    private int routineID;
 
     NotificationManagerCompat notificationManager;
 
@@ -41,17 +51,17 @@ public class AlarmService extends Service
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        String routineName = intent.getStringExtra("Routine Name");
-        int routineID = intent.getIntExtra("Routine ID", -1);
+        routineName = intent.getStringExtra("Routine Name");
+        routineID = intent.getIntExtra("Routine ID", -1);
 
-        long[] vibratePattern = new long[] {500, 500, 500};
+        long[] vibratePattern = new long[] { 500, 500, 500 };
 
         Intent receiver = new Intent(this, NotificationActionReceiver.class);
         PendingIntent pOkIntent = PendingIntent.getBroadcast(
-                this, ACTION_OK, receiver.putExtra("Request Code", ACTION_OK), 0);
+                this, ACTION_OK, receiver.putExtra("Request Code", ACTION_OK).putExtra("Routine ID", routineID), 0);
 
         PendingIntent pSnoozeIntent = PendingIntent.getBroadcast(
-                this, ACTION_SNOOZE, receiver.putExtra("Request Code", ACTION_SNOOZE), 0);
+                this, ACTION_SNOOZE, receiver.putExtra("Request Code", ACTION_SNOOZE).putExtra("Routine ID", routineID), 0);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(), 0);
 
@@ -70,14 +80,26 @@ public class AlarmService extends Service
                 .build();
 
         notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(NOTIFICATION_ID, notification);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
+        {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);
+            mChannel.setDescription(CHANNEL_DESC);
+            mChannel.enableVibration(true);
+            mChannel.setVibrationPattern(vibratePattern);
+
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        startForeground(1, notification);
 
         mediaPlayer.start();
 
         Log.i("DEBUG-TEST", "ALARM SERVICE RUNNING");
         Log.i("Routine ID", "Routine ID : " + routineID);
 
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     @Override
