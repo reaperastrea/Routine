@@ -20,7 +20,9 @@ public class History {
     public int getId() { return id; }
     public int getRoutineId() { return routineId; }
     public Date getDate() { return dateFormatter.parse(date, null); }
+    //public String getDateAsString() { return date; }
     public Date getTime() { return formatter.parse(time, null); }
+    //public String getTimeAsString() { return time; }
 
     public void setId(int id) { this.id = id; }
     public void setRoutineId(int id) { routineId = id; }
