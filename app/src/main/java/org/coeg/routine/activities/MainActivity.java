@@ -45,12 +45,12 @@ public class MainActivity extends AppCompatActivity
     private ViewPager   vpLayout;
 
     private SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
     private RoutinesHandler handler;
 
     //Testing database input
-    //public static int counter = 0;
-    //List<Routine> query;
+    public static int counter = 0;
+    List<History> query;
 
     //Testing executors
     //ExecutorService executorService = Executors.newFixedThreadPool(2);
@@ -276,21 +276,62 @@ public class MainActivity extends AppCompatActivity
                 histories[0].setDate(dateFormatter.parse("2021-05-08"));
 
                 histories[1].setId(2);
-                histories[1].setRoutineId(3);
+                histories[1].setRoutineId(2);
                 histories[1].setTime(formatter.parse("16:01:00"));
                 histories[1].setDate(dateFormatter.parse("2021-05-08"));
 
                 histories[2].setId(3);
-                histories[2].setRoutineId(1);
+                histories[2].setRoutineId(3);
                 histories[2].setTime(formatter.parse("14:01:30"));
                 histories[2].setDate(dateFormatter.parse("2021-05-08"));
 
                 histories[3].setId(4);
-                histories[3].setRoutineId(1);
+                histories[3].setRoutineId(4);
                 histories[3].setTime(formatter.parse("13:59:00"));
                 histories[3].setDate(dateFormatter.parse("2021-05-08"));
 
                 handler.addHistory(histories);
+
+                /*query = handler.getAllHistory();
+                if(query.get(0).getId() == (histories[0].getId())){
+                    counter++;
+                }if(query.get(0).getRoutineId() == (histories[0].getRoutineId())){
+                    counter++;
+                }//if(query.get(0).getTime().equals(histories[0].getTime())) {
+                   // counter++;
+                /*}if(query.get(0).getDate().equals(histories[0].getDate())){
+                    counter++;
+                }*/
+
+                /*if(query.get(1).getId() == (histories[1].getId())){
+                    counter++;
+                }if(query.get(1).getRoutineId() == (histories[1].getRoutineId())){
+                    counter++;
+                }if(query.get(1).getTime().equals(histories[1].getTime())) {
+                    counter++;
+                }/*}if(query.get(1).getDate().equals(histories[1].getDate())){
+                    counter++;
+                }*/
+
+                /*if(query.get(2).getId() == (histories[2].getId())){
+                    counter++;
+                }if(query.get(2).getRoutineId() == (histories[2].getRoutineId())){
+                    counter++;
+                }if(query.get(2).getTime().equals(histories[2].getTime())) {
+                    counter++;
+                }/*}if(query.get(2).getDate().equals(histories[2].getDate())){
+                    counter++;
+                }*/
+
+                /*if(query.get(3).getId() == (histories[3].getId())){
+                    counter++;
+                }if(query.get(3).getRoutineId() == (histories[3].getRoutineId())){
+                    counter++;
+                }*//*if(query.get(3).getTime().equals(histories[3].getTime())){
+                    counter++;
+                }if(query.get(3).getDate().equals(histories[3].getDate())){
+                    counter++;
+                }*/
 
                 //Test database input
                 /*query = handler.getAllRoutines();

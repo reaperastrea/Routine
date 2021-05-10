@@ -17,6 +17,7 @@ import org.coeg.routine.backend.History;
 import org.coeg.routine.backend.Operations;
 import org.coeg.routine.backend.Routine;
 
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -25,7 +26,14 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
     private LinkedList<History> mHistoryList;
     private LayoutInflater mInflater;
     private Context mContext;
+    private int latetime;
     //private int count = 0;
+
+    //formatter
+    private static SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+    private static SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+    //private String tes;
 
     public RecentRoutinesAdapter(Context context, LinkedList<Routine> routineList, LinkedList<History> historyList){
         this.mContext = context;
@@ -37,7 +45,7 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
     @NonNull
     @Override
     public RecentRoutinesAdapter.RoutinesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_list_layout , parent , false);
+        View view = mInflater.inflate(R.layout.item_recent_layout , parent , false);
         return new RecentRoutinesAdapter.RoutinesViewHolder(view, this);
     }
 
@@ -47,7 +55,23 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
         History mHistory = mHistoryList.get(position);
         holder.tvName.setText(mRoutine.getName());
         holder.tvTime.setText(Objects.requireNonNull(mRoutine.getTimeAsString()).substring(0,5));
-        holder.tvStatus.setText(String.valueOf(Operations.countLateMinutes(mRoutine, mHistory)));
+
+        latetime = Operations.countLateMinutes(mRoutine, mHistory);
+        if (latetime < 1){
+            holder.tvStatus.setText("On Time");
+        }else if (latetime >= 1 && latetime < 30){
+            StringBuilder builder = new StringBuilder();
+            builder.append(latetime);
+            builder.append(" Minutes Late");
+            holder.tvStatus.setText(builder.toString());
+        }else if (latetime > 30){
+            holder.tvStatus.setText("Missed");
+        }
+
+        //holder.tvName.setText(String.valueOf(mHistory.getId()));
+        //holder.tvTime.setText(String.valueOf(mHistory.getRoutineId()));
+        //tes = "Date : "+(mHistory.getTimeAsString())+"Time : "+(mHistory.getDateAsString());
+        //holder.tvStatus.setText(tes);
     }
 
     @Override
