@@ -30,15 +30,14 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
     private LinkedList<History> mHistoryList;
     private LayoutInflater mInflater;
     private Context mContext;
+
+    //Variable to dynamically control how late can the user be before a routine gets tagged "Missed"
     private int latetime;
     private final int lateLimit = 20;
-    //private int count = 0;
 
     //formatter
     private static SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
     private static SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-
-    //private String tes;
 
     public RecentRoutinesAdapter(Context context, LinkedList<Routine> routineList, LinkedList<History> historyList){
         this.mContext = context;
@@ -59,16 +58,13 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
         Routine mRoutine = mRoutineList.get(position);
         History mHistory = mHistoryList.get(position);
         holder.tvName.setText(mRoutine.getName());
-        //holder.tvName.setText(dateFormatter.format(Calendar.getInstance().getTime()));
         holder.tvTime.setText(Objects.requireNonNull(mRoutine.getTimeAsString()).substring(0,5));
-        //holder.tvTime.setText(mHistory.getDateAsString());
 
         try {
             latetime = countLate(mRoutine, mHistory);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        //holder.tvStatus.setText(String.valueOf(latetime));
 
         //if statement to set color and text depending on how late the user is
         //todo:set color

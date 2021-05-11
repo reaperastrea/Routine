@@ -53,9 +53,6 @@ public class MainActivity extends AppCompatActivity
     public static int counter = 0;
     List<History> query;
 
-    //Testing executors
-    //ExecutorService executorService = Executors.newFixedThreadPool(2);
-
     private final int[] tabIcons = {
             R.drawable.ic_dashboard,
             R.drawable.ic_routine_list,
@@ -78,6 +75,7 @@ public class MainActivity extends AppCompatActivity
 
         // CAUTION: WILL ALWAYS LOAD 4 OF THE PAGES INSTANTLY
         // MIGHT INTRODUCE HUGE PERFORMANCE IMPACT IN THE LONG RUN(?)
+        //Set to 1
         vpLayout.setOffscreenPageLimit(1);
 
         tlNavigation.setupWithViewPager(vpLayout);
@@ -205,7 +203,8 @@ public class MainActivity extends AppCompatActivity
         viewPager.setPageMargin(200);
     }
 
-    //Tes input data dummy
+    //Inputting dummy data
+    //todo: delete this whole function once everything is done
     private class InsertDummyData  extends AsyncTask<Context, Integer, Integer> {
         @Override
         protected void onPreExecute() {
@@ -292,59 +291,6 @@ public class MainActivity extends AppCompatActivity
                 histories[3].setDate(dateFormatter.parse("2021-05-11"));
 
                 handler.addHistory(histories);
-
-                /*query = handler.getAllHistory();
-                if(query.get(0).getId() == (histories[0].getId())){
-                    counter++;
-                }if(query.get(0).getRoutineId() == (histories[0].getRoutineId())){
-                    counter++;
-                }//if(query.get(0).getTime().equals(histories[0].getTime())) {
-                   // counter++;
-                /*}if(query.get(0).getDate().equals(histories[0].getDate())){
-                    counter++;
-                }*/
-
-                /*if(query.get(1).getId() == (histories[1].getId())){
-                    counter++;
-                }if(query.get(1).getRoutineId() == (histories[1].getRoutineId())){
-                    counter++;
-                }if(query.get(1).getTime().equals(histories[1].getTime())) {
-                    counter++;
-                }/*}if(query.get(1).getDate().equals(histories[1].getDate())){
-                    counter++;
-                }*/
-
-                /*if(query.get(2).getId() == (histories[2].getId())){
-                    counter++;
-                }if(query.get(2).getRoutineId() == (histories[2].getRoutineId())){
-                    counter++;
-                }if(query.get(2).getTime().equals(histories[2].getTime())) {
-                    counter++;
-                }/*}if(query.get(2).getDate().equals(histories[2].getDate())){
-                    counter++;
-                }*/
-
-                /*if(query.get(3).getId() == (histories[3].getId())){
-                    counter++;
-                }if(query.get(3).getRoutineId() == (histories[3].getRoutineId())){
-                    counter++;
-                }*//*if(query.get(3).getTime().equals(histories[3].getTime())){
-                    counter++;
-                }if(query.get(3).getDate().equals(histories[3].getDate())){
-                    counter++;
-                }*/
-
-                //Test database input
-                /*query = handler.getAllRoutines();
-                if(query.get(0).getName().equals(routines[0].getName())){
-                    counter++;
-                }if(query.get(1).getName().equals(routines[1].getName())){
-                    counter++;
-                }if(query.get(2).getName().equals(routines[2].getName())){
-                    counter++;
-                }if(query.get(3).getName().equals(routines[3].getName())){
-                    counter++;
-                }*/
             } catch (Exception e) {
                 e.printStackTrace();
             } return 0;

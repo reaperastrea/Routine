@@ -61,6 +61,7 @@ public class DashboardFragment extends Fragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
+        //Fetching data from database asynchronously
         new DBAsync().execute(this.getContext());
         FetchPreferences();
         InitView(view);
@@ -89,8 +90,6 @@ public class DashboardFragment extends Fragment
         // Set view data from database
         txtName.setText(name);
         String auahgelap = String.format("%f %%", accuracy);
-        // accuracy.toString() + "%";
-        // String.format("%f %%", accuracy);
         txtAccuracy.setText(auahgelap);
         imgUser.setImageBitmap(profilePicture);
 
