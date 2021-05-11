@@ -36,7 +36,7 @@ public class ListFragment extends Fragment
 
     //private Boolean isFetched = false;
 
-    private SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+    //private SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
     //List<Routine> query;
 
     //public static int counter = 0;
