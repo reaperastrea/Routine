@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
-public class PreferencesTest {
+public class    PreferencesTest {
     @Test
     public void testPreferences() {
         PreferencesStorage preferences = PreferencesStorage.getInstance();

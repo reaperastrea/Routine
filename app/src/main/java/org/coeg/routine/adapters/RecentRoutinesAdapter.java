@@ -17,7 +17,10 @@ import org.coeg.routine.backend.History;
 import org.coeg.routine.backend.Operations;
 import org.coeg.routine.backend.Routine;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -27,6 +30,7 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
     private LayoutInflater mInflater;
     private Context mContext;
     private int latetime;
+    private final int lateLimit = 20;
     //private int count = 0;
 
     //formatter
@@ -54,17 +58,25 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
         Routine mRoutine = mRoutineList.get(position);
         History mHistory = mHistoryList.get(position);
         holder.tvName.setText(mRoutine.getName());
+        //holder.tvName.setText(dateFormatter.format(Calendar.getInstance().getTime()));
         holder.tvTime.setText(Objects.requireNonNull(mRoutine.getTimeAsString()).substring(0,5));
+        //holder.tvTime.setText(mHistory.getDateAsString());
 
-        latetime = Operations.countLateMinutes(mRoutine, mHistory);
+        try {
+            latetime = countLate(mRoutine, mHistory);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //holder.tvStatus.setText(String.valueOf(latetime));
+
         if (latetime < 1){
             holder.tvStatus.setText("On Time");
-        }else if (latetime >= 1 && latetime < 30){
+        }else if (latetime >= 1 && latetime < lateLimit){
             StringBuilder builder = new StringBuilder();
             builder.append(latetime);
             builder.append(" Minutes Late");
             holder.tvStatus.setText(builder.toString());
-        }else if (latetime > 30){
+        }else if (latetime >= lateLimit){
             holder.tvStatus.setText("Missed");
         }
 
@@ -98,5 +110,14 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
         public void onClick(View v) {
 
         }
+    }
+
+    private Integer countLate(Routine routine, History history) throws ParseException {
+        Date lateTime = formatter.parse(history.getTimeAsString());
+        Date routineTime = formatter.parse(routine.getTimeAsString());
+        Long late = lateTime.getTime() - routineTime.getTime();
+        Integer mins = (int)(late - (late % 60)) / 60;
+
+        return mins/1000;
     }
 }

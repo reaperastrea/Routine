@@ -18,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import org.coeg.routine.backend.Days;
 import org.coeg.routine.backend.History;
+import org.coeg.routine.backend.PreferencesStorage;
 import org.coeg.routine.backend.Routine;
 import org.coeg.routine.backend.RoutinesHandler;
 import org.coeg.routine.fragments.AnalyticFragment;
@@ -273,22 +274,22 @@ public class MainActivity extends AppCompatActivity
                 histories[0].setId(1);
                 histories[0].setRoutineId(1);
                 histories[0].setTime(formatter.parse("14:00:00"));
-                histories[0].setDate(dateFormatter.parse("2021-05-08"));
+                histories[0].setDate(dateFormatter.parse("2021-05-10"));
 
                 histories[1].setId(2);
                 histories[1].setRoutineId(2);
-                histories[1].setTime(formatter.parse("16:01:00"));
-                histories[1].setDate(dateFormatter.parse("2021-05-08"));
+                histories[1].setTime(formatter.parse("15:01:00"));
+                histories[1].setDate(dateFormatter.parse("2021-05-12"));
 
                 histories[2].setId(3);
                 histories[2].setRoutineId(3);
-                histories[2].setTime(formatter.parse("14:01:30"));
-                histories[2].setDate(dateFormatter.parse("2021-05-08"));
+                histories[2].setTime(formatter.parse("16:20:00"));
+                histories[2].setDate(dateFormatter.parse("2021-05-11"));
 
                 histories[3].setId(4);
                 histories[3].setRoutineId(4);
-                histories[3].setTime(formatter.parse("13:59:00"));
-                histories[3].setDate(dateFormatter.parse("2021-05-08"));
+                histories[3].setTime(formatter.parse("17:19:59"));
+                histories[3].setDate(dateFormatter.parse("2021-05-11"));
 
                 handler.addHistory(histories);
 
