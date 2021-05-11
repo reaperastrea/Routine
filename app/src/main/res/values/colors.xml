@@ -22,6 +22,12 @@
     <color name="green_500">#B1D66D</color>
     <color name="green_600">#92b15a</color>
 
+    <color name="yellow_500">#D6CF6D</color>
+    <color name="yellow_600">#B7B05A</color>
+
+    <color name="red_500">#D66D6D</color>
+    <color name="red_600">#A84A4A</color>
+
     <color name="dayPressed">@color/white</color>
     <color name="daySelected">@color/white</color>
     <color name="daySelectedTextColor">@color/green_500</color>
