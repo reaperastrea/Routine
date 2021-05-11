@@ -88,7 +88,7 @@ public class ListFragment extends Fragment
             try{
                 handler = new RoutinesHandler(context[0]);
                 routines.addAll(handler.getAllRoutines());
-                
+
                 mAdapter.notifyItemInserted(0);
 
             } catch (Exception e) {

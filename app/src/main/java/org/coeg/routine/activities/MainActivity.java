@@ -264,6 +264,8 @@ public class MainActivity extends AppCompatActivity
 
                 handler.addRoutine(routines);
 
+
+                //Add dummy history
                 History[] histories = {
                         new History(),
                         new History(),
@@ -273,21 +275,29 @@ public class MainActivity extends AppCompatActivity
                 histories[0].setId(1);
                 histories[0].setRoutineId(1);
                 histories[0].setTime(formatter.parse("14:00:00"));
+
+                //Set this according to your system time so it'll be displayed (or don't, up to you)
                 histories[0].setDate(dateFormatter.parse("2021-05-11"));
 
                 histories[1].setId(2);
                 histories[1].setRoutineId(2);
                 histories[1].setTime(formatter.parse("15:01:00"));
+
+                //Set this according to your system time so it'll be displayed (or don't, up to you)
                 histories[1].setDate(dateFormatter.parse("2021-05-11"));
 
                 histories[2].setId(3);
                 histories[2].setRoutineId(3);
                 histories[2].setTime(formatter.parse("16:20:00"));
+
+                //Set this according to your system time so it'll be displayed (or don't, up to you)
                 histories[2].setDate(dateFormatter.parse("2021-05-11"));
 
                 histories[3].setId(4);
                 histories[3].setRoutineId(4);
                 histories[3].setTime(formatter.parse("17:19:59"));
+
+                //Set this according to your system time so it'll be displayed (or don't, up to you)
                 histories[3].setDate(dateFormatter.parse("2021-05-11"));
 
                 handler.addHistory(histories);
