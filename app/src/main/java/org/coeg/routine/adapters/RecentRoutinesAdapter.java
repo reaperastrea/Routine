@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.coeg.routine.R;
@@ -69,6 +70,8 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
         }
         //holder.tvStatus.setText(String.valueOf(latetime));
 
+        //if statement to set color and text depending on how late the user is
+        //todo:set color
         if (latetime < 1){
             holder.tvStatus.setText("On Time");
         }else if (latetime >= 1 && latetime < lateLimit){
@@ -79,11 +82,6 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
         }else if (latetime >= lateLimit){
             holder.tvStatus.setText("Missed");
         }
-
-        //holder.tvName.setText(String.valueOf(mHistory.getId()));
-        //holder.tvTime.setText(String.valueOf(mHistory.getRoutineId()));
-        //tes = "Date : "+(mHistory.getTimeAsString())+"Time : "+(mHistory.getDateAsString());
-        //holder.tvStatus.setText(tes);
     }
 
     @Override

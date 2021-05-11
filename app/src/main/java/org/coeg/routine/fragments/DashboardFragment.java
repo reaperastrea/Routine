@@ -150,7 +150,6 @@ public class DashboardFragment extends Fragment
         protected LinkedList<Routine> doInBackground(Context... context) {
             try{
                 handler = new RoutinesHandler(context[0]);
-                //historyList.addAll(handler.getAllHistory());
                 LinkedList<History> HistoryTemp = new LinkedList<>(handler.getAllHistory());
                 for(int i = 0; i < handler.getHistoryCount(); i++){
                     if(HistoryTemp.get(i).getDateAsString().equals(dateFormatter.format(Calendar.getInstance().getTime())) ){

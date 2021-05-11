@@ -274,12 +274,12 @@ public class MainActivity extends AppCompatActivity
                 histories[0].setId(1);
                 histories[0].setRoutineId(1);
                 histories[0].setTime(formatter.parse("14:00:00"));
-                histories[0].setDate(dateFormatter.parse("2021-05-10"));
+                histories[0].setDate(dateFormatter.parse("2021-05-11"));
 
                 histories[1].setId(2);
                 histories[1].setRoutineId(2);
                 histories[1].setTime(formatter.parse("15:01:00"));
-                histories[1].setDate(dateFormatter.parse("2021-05-12"));
+                histories[1].setDate(dateFormatter.parse("2021-05-11"));
 
                 histories[2].setId(3);
                 histories[2].setRoutineId(3);
