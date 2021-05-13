@@ -121,7 +121,7 @@ public class AlarmService extends Service
             notificationManager.createNotificationChannel(mChannel);
         }
 
-        Log.i("DEBUG-TEST", "ALARM SERVICE RUNNING");
+        Log.i("Routine", "ALARM SERVICE RUNNING");
         Log.i("Routine ID", "Routine ID : " + routineID);
     }
 }

@@ -24,18 +24,23 @@ public class NotificationActionReceiver extends BroadcastReceiver
         switch(reqCode)
         {
             case ACTION_OK:
-                Log.i("DEBUG-TEST", "User Clicked Ok in Notification");
-                Log.i("DEBUG-TEST", "Receivers Request Code : " + reqCode);
-                Log.i("DEBUG-TEST", "Routine ID : " + routineID);
+                Log.i("Routine", "User Clicked Ok in Notification");
+                Log.i("Routine", "Receivers Request Code : " + reqCode);
+                Log.i("Routine", "Routine ID : " + routineID);
                 context.stopService(intentServiceToStop);
                 break;
 
             case ACTION_SNOOZE:
-                Log.i("DEBUG-TEST", "User Clicked Snooze in Notification");
-                Log.i("DEBUG-TEST", "Receivers Request Code : " + reqCode);
-                Log.i("DEBUG-TEST", "Routine ID : " + routineID);
+                Log.i("Routine", "User Clicked Snooze in Notification");
+                Log.i("Routine", "Receivers Request Code : " + reqCode);
+                Log.i("Routine", "Routine ID : " + routineID);
                 context.stopService(intentServiceToStop);
                 break;
         }
+    }
+
+    private void saveActionToDatabase()
+    {
+        
     }
 }

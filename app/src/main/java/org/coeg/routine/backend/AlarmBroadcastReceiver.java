@@ -11,7 +11,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver
     @Override
     public void onReceive(Context context, Intent intent)
     {
-        Log.i("DEBUG-TEST", "BROADCAST RECEIVED");
+        Log.i("Routine", "BROADCAST RECEIVED");
         if (Intent.ACTION_LOCKED_BOOT_COMPLETED.equals(intent.getAction()))
         {
             // Reschedule routines to alarm manager
