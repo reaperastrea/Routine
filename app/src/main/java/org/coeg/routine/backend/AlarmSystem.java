@@ -28,7 +28,7 @@ public class AlarmSystem
 
     /**
      * Schedule routine to alarm manager
-     * @param routine
+     * @param routine Routine that want to be schedule
      * @apiNote PLEASE CHECK TO MAKE SURE THERE AREN'T ANY OF THE SAME ROUTINE WITH
      * THE SAME DAY + HOURS IN THE DATABASE BEFORE CALLING THIS METHOD
      */
@@ -92,22 +92,22 @@ public class AlarmSystem
                     break;
             }
 
-            Log.i("DEBUG-TEST", "---------");
+            Log.i("Routine", "---------");
 
             // Check if whether the day selected has passed, if yes then
             // add 7 days into the scheduler
             if (scheduleTime.getTimeInMillis() <= System.currentTimeMillis())
             {
                 scheduleTime.add(Calendar.DAY_OF_MONTH, 7);
-                Log.i("DEBUG-TEST", "ADD 7 DAYS");
+                Log.i("Routine", "ADD 7 DAYS");
             }
 
             // DEBUG LOG
-            Log.i("DEBUG-TEST", "Day     : " + scheduleTime.get(Calendar.DAY_OF_WEEK));
-            Log.i("DEBUG-TEST", "Hours   : " + scheduleTime.get(Calendar.HOUR_OF_DAY));
-            Log.i("DEBUG-TEST", "Minutes : " + scheduleTime.get(Calendar.MINUTE));
-            Log.i("DEBUG-TEST", "DOM     : " + scheduleTime.get(Calendar.DAY_OF_MONTH));
-            Log.i("DEBUG-TEST", "Month   : " + scheduleTime.get(Calendar.MONTH));
+            Log.i("Routine", "Day     : " + scheduleTime.get(Calendar.DAY_OF_WEEK));
+            Log.i("Routine", "Hours   : " + scheduleTime.get(Calendar.HOUR_OF_DAY));
+            Log.i("Routine", "Minutes : " + scheduleTime.get(Calendar.MINUTE));
+            Log.i("Routine", "DOM     : " + scheduleTime.get(Calendar.DAY_OF_MONTH));
+            Log.i("Routine", "Month   : " + scheduleTime.get(Calendar.MONTH));
 
             // Intent to handle broadcast from alarm manager
             Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
