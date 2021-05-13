@@ -26,8 +26,6 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
     private Context mContext;
     private int count = 0;
 
-    //private static SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-
     public RoutineListAdapter(Context context, LinkedList<Routine> routineList){
         this.mContext = context;
         this.mRoutineList = routineList;
