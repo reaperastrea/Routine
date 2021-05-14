@@ -50,7 +50,7 @@ public class AlarmService extends Service
     public int onStartCommand(Intent intent, int flags, int startId)
     {
         setupNotification(intent);
-        startForeground(1, notification);
+        startForeground(NOTIFICATION_ID, notification);
         mediaPlayer.start();
 
         return START_NOT_STICKY;
