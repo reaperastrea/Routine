@@ -1,5 +1,6 @@
 package org.coeg.routine.backend;
 
+import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,10 +13,11 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver
     public void onReceive(Context context, Intent intent)
     {
         Log.i("Routine", "BROADCAST RECEIVED");
-        if (Intent.ACTION_LOCKED_BOOT_COMPLETED.equals(intent.getAction()))
+        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction()))
         {
             // Reschedule routines to alarm manager
             // When user reboot their phone
+            startRescheduleAlarmService(context, intent);
             return;
         }
 
@@ -29,6 +31,20 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver
         intentService.putExtra("Routine Name", intent.getStringExtra("Routine Name"));
         intentService.putExtra("Routine ID", intent.getIntExtra("Routine ID", -1));
 
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            context.startForegroundService(intentService);
+        }
+        else
+        {
+            context.startService(intentService);
+        }
+    }
+
+    private void startRescheduleAlarmService(Context context, Intent intent)
+    {
+        Intent intentService = new Intent(context, RescheduleAlarmService.class);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         {
