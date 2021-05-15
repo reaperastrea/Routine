@@ -156,6 +156,10 @@ public class DashboardFragment extends Fragment
                         routineList.add(handler.getRoutine(HistoryTemp.get(i).getRoutineId()));
                     }
                 }
+                
+                for (;;) {
+                    if(mAdapter != null){break;}
+                }  
 
                 mAdapter.notifyItemInserted(0);
 
