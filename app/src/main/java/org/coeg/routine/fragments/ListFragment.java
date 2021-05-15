@@ -88,6 +88,10 @@ public class ListFragment extends Fragment
             try{
                 handler = new RoutinesHandler(context[0]);
                 routines.addAll(handler.getAllRoutines());
+                
+                for (;;) {
+                    if(mAdapter != null){break;}
+                }  
 
                 mAdapter.notifyItemInserted(0);
 
