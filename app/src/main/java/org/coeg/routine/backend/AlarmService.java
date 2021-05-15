@@ -83,12 +83,14 @@ public class AlarmService extends Service
         PendingIntent pOkIntent = PendingIntent.getBroadcast(
                 this, ACTION_OK, receiver
                         .putExtra("Request Code", ACTION_OK)
-                        .putExtra("Routine ID", routineID), 0);
+                        .putExtra("Routine ID", routineID)
+                        .putExtra("Routine Name", routineName), 0);
 
         PendingIntent pSnoozeIntent = PendingIntent.getBroadcast(
                 this, ACTION_SNOOZE, receiver
                         .putExtra("Request Code", ACTION_SNOOZE)
-                        .putExtra("Routine ID", routineID), 0);
+                        .putExtra("Routine ID", routineID)
+                        .putExtra("Routine Name", routineName), 0);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(), 0);
 
