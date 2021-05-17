@@ -319,6 +319,7 @@ public class AddRoutineActivity extends AppCompatActivity
 
         if (CheckAvailability(routine))
         {
+            routine.schedule(getApplicationContext());
             new DBAsync().execute(routine);
         }
         else
