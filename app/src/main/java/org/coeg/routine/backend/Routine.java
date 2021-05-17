@@ -9,6 +9,7 @@ import android.util.Log;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,10 +19,12 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Routine {
+public class Routine implements Serializable {
     private static SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 
-    @PrimaryKey int id;
+    @PrimaryKey (autoGenerate = true)
+    int id;
+
     String name;
     String time; // use SimpleDateFormat to parse
     int days;
