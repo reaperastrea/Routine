@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,9 @@ import java.util.List;
 
 public class ListFragment extends Fragment
 {
+    private final static int REQUEST_ADD = 0;
+    private final static int REQUEST_EDIT = 1;
+
     ImageButton         btnAddRoutine;
     RecyclerView        rvRoutineList;
     RoutineListAdapter  mAdapter;
@@ -40,7 +44,7 @@ public class ListFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         //Fetching data from database asynchronously
-        new DBAsync().execute(this.getContext());
+        new DBAsync().execute(getContext());
         InitView(view);
         InitListener();
     }
@@ -50,6 +54,20 @@ public class ListFragment extends Fragment
     {
         // Defines the xml file for the fragment
         return inflater.inflate(R.layout.fragment_list, container, false);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("RESULT-CODE", "" + resultCode);
+        if (resultCode == -1)
+        {
+            routines = new LinkedList<>();
+            new DBAsync().execute(this.getContext());
+            InitView(getView());
+            InitListener();
+        }
     }
 
     /**
@@ -66,6 +84,16 @@ public class ListFragment extends Fragment
         rvRoutineList.setLayoutManager(new LinearLayoutManager(this.getContext()));
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        routines = new LinkedList<>();
+        new DBAsync().execute(this.getContext());
+        InitView(getView());
+        InitListener();
+    }
+
     /**
      * Initialize component listener
      */
@@ -77,7 +105,7 @@ public class ListFragment extends Fragment
         });
     }
 
-    private class DBAsync  extends AsyncTask<Context, Integer, LinkedList<Routine>> {
+    private class DBAsync extends AsyncTask<Context, Integer, LinkedList<Routine>> {
         @Override
         protected void onPreExecute() {
 
@@ -91,7 +119,7 @@ public class ListFragment extends Fragment
                 
                 for (;;) {
                     if(mAdapter != null){break;}
-                }  
+                }
 
                 mAdapter.notifyItemInserted(0);
 

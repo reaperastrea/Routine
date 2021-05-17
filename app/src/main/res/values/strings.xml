@@ -44,6 +44,7 @@
 
     <!-- Add routine -->
     <string name="title_add_routine">Add Routine</string>
+    <string name="title_delete_routine">Delete Routine</string>
     <string name="hint_routine_name">Routine name</string>
     <string name="hint_allow_snoozing">Allow snoozing</string>
     <string name="desc_btn_exit">Exit button</string>

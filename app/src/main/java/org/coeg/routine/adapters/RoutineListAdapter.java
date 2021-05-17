@@ -1,5 +1,6 @@
 package org.coeg.routine.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.RoutinesViewHolder> {
+    private final static int REQUEST_ADD = 0;
+    private final static int REQUEST_EDIT = 1;
     private LinkedList<Routine> mRoutineList;
     private LayoutInflater mInflater;
     private Context mContext;
@@ -131,7 +134,8 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
         private int mPosisi;
         private Routine mRoutine;
 
-        public RoutinesViewHolder(@NonNull View itemView, RoutineListAdapter adapter) {
+        public RoutinesViewHolder(@NonNull View itemView, RoutineListAdapter adapter)
+        {
             super(itemView);
             mAdapter = adapter;
             tvDay = (TextView) itemView.findViewById(R.id.txt_routineDay);
@@ -141,17 +145,20 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             mPosisi = getLayoutPosition();
             mRoutine = mRoutineList.get(mPosisi);
-            Intent detilInten = new Intent(mContext, AddRoutineActivity.class);
-            String title = "Update Routine";
-            detilInten.putExtra("Update Routine", title);
+            Intent intent = new Intent(mContext, AddRoutineActivity.class);
+            intent.putExtra("ReqCode", REQUEST_EDIT);
+            intent.putExtra("Position", mPosisi);
+
             Bundle bundle = new Bundle();
-            bundle.putSerializable("UrutanRoutine", mPosisi);
-            bundle.putSerializable("ListRoutine", mRoutineList);
-            detilInten.putExtras(bundle);
-            mContext.startActivity(detilInten);
+            bundle.putSerializable("Routine", mRoutine);
+
+            intent.putExtras(bundle);
+
+            mContext.startActivity(intent);
         }
     }
 }

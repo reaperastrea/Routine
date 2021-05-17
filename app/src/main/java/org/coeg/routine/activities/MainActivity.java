@@ -1,9 +1,11 @@
 package org.coeg.routine.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity
     private SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
     private RoutinesHandler handler;
+
+    private ViewPagerAdapter adapter;
 
     //Testing database input
     public static int counter = 0;
@@ -178,7 +183,7 @@ public class MainActivity extends AppCompatActivity
     {
         View[] views = new View[TAB_COUNT];
 
-        // Initiate each cusstom view for each tab navigation
+        // Initiate each custom view for each tab navigation
         for (int i = 0; i < views.length; i++)
         {
             views[i] = getLayoutInflater().inflate(R.layout.customtab, null);
@@ -192,7 +197,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager)
     {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new DashboardFragment(), "Dashboard");
         adapter.addFragment(new ListFragment(), "Routine List");
@@ -215,7 +220,7 @@ public class MainActivity extends AppCompatActivity
         protected Integer doInBackground(Context... context) {
             try{
                 handler = new RoutinesHandler(context[0]);
-                handler.deleteAllRoutines();
+                //handler.deleteAllRoutines();
 
                 Routine[] routines = {
                         new Routine(),
@@ -244,13 +249,8 @@ public class MainActivity extends AppCompatActivity
                 routines[2].setTime(formatter.parse("16:00:00"));
                 routines[2].setActive(true);
                 routines[2].setDays(new Days[] {
-                        Days.Monday,
-                        Days.Tuesday,
                         Days.Wednesday,
-                        Days.Thursday,
                         Days.Friday,
-                        Days.Saturday,
-                        Days.Sunday
                 });
                 routines[3].setId(4);
                 routines[3].setName("Weapons check-up");
@@ -262,8 +262,7 @@ public class MainActivity extends AppCompatActivity
                         Days.Friday
                 });
 
-                handler.addRoutine(routines);
-
+                //handler.addRoutine(routines);
 
                 //Add dummy history
                 History[] histories = {
@@ -300,7 +299,7 @@ public class MainActivity extends AppCompatActivity
                 //Set this according to your system time so it'll be displayed (or don't, up to you)
                 histories[3].setDate(dateFormatter.parse("2021-05-11"));
 
-                handler.addHistory(histories);
+                //handler.addHistory(histories);
             } catch (Exception e) {
                 e.printStackTrace();
             } return 0;

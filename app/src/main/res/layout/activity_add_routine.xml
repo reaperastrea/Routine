@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/green_500"
@@ -162,41 +163,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/picker_day" />
 
-            <LinearLayout
-                android:id="@+id/layout_switch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:background="@drawable/square_rounded"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="15dp"
-                android:paddingVertical="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_inputRoutineName">
-
-                <TextView
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:text="@string/hint_allow_snoozing"
-                    android:textColor="@color/green_500"
-                    android:textSize="18sp" />
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switch_allowSnoozing"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:checked="true"
-                    android:scaleX="0.9"
-                    android:scaleY="0.9"
-                    android:theme="@style/Routine.Switch"
-                    android:thumb="@drawable/switch_thumb"
-                    app:track="@drawable/switch_track" />
-
-            </LinearLayout>
-
             <Button
                 style="@style/Button"
                 android:id="@+id/btn_addRoutine"
@@ -210,10 +176,26 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="22sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_switch" />
+                app:layout_constraintTop_toBottomOf="@+id/et_inputRoutineName" />
+
+            <Button
+                android:id="@+id/btn_deleteRoutine"
+                style="@style/Button"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_extrabold"
+                android:padding="15dp"
+                android:text="@string/title_delete_routine"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_addRoutine" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
