@@ -80,7 +80,7 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
                             builder.append("Sun");
                             break;
                     }
-                    if (i < (routineDays.length)){
+                    if (count < (routineDays.length)){
                         builder.append(",");
                     }
                 }
