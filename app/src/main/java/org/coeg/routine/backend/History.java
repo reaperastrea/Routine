@@ -12,7 +12,7 @@ import java.util.Date;
 public class History {
     private static SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
     private static SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-    @PrimaryKey int id;
+    @PrimaryKey(autoGenerate = true) int id;
     int routineId;
     String date;
     String time;
