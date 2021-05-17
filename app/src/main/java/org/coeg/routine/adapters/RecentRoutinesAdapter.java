@@ -55,8 +55,8 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
 
     @Override
     public void onBindViewHolder(@NonNull RecentRoutinesAdapter.RoutinesViewHolder holder, int position) {
-        Routine mRoutine = mRoutineList.get(position);
         History mHistory = mHistoryList.get(position);
+        Routine mRoutine = mRoutineList.get(mHistory.getRoutineId());
         holder.tvName.setText(mRoutine.getName());
         holder.tvTime.setText(Objects.requireNonNull(mRoutine.getTimeAsString()).substring(0,5));
 

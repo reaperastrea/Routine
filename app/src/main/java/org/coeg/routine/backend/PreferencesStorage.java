@@ -95,6 +95,16 @@ public class PreferencesStorage {
     public void setEnableTelemetry(boolean target) { enableTelemetry = target; }
     public void setEnablePushNotifications(boolean target) { enablePushNotifications = target; }
     public void setEnablePreReminder(boolean target) { enablePreReminder = target; }
+    public void resetPreferences() {
+        userId = -1;
+        userFullName = "";
+        profilePicturePath = "";
+        onTimeCounter = 0;
+        lateCounter = 0;
+        enableTelemetry = true;
+        enablePushNotifications = true;
+        enablePreReminder = true;
+    }
 
     public static int getRandomUserId(int min, int max) {
         return (int)((Math.random() * (max - min)) + min);

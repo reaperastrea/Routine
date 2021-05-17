@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,26 +140,30 @@ public class DashboardFragment extends Fragment
         accuracy = 0;
     }
 
-    private class DBAsync  extends AsyncTask<Context, Integer, LinkedList<Routine>> {
+    private class DBAsync extends AsyncTask<Context, Integer, Void> {
         @Override
         protected void onPreExecute() {
 
         }
 
         @Override
-        protected LinkedList<Routine> doInBackground(Context... context) {
+        protected Void doInBackground(Context... context) {
             try{
                 handler = new RoutinesHandler(context[0]);
                 LinkedList<History> HistoryTemp = new LinkedList<>(handler.getAllHistory());
+                LinkedList<Routine> RoutineTemp = new LinkedList<>(handler.getAllRoutines());
+                Log.i(getClass().toString(), "History size = " + RoutineTemp.size());
                 for(int i = 0; i < handler.getHistoryCount(); i++){
                     if(HistoryTemp.get(i).getDateAsString().equals(dateFormatter.format(Calendar.getInstance().getTime())) ){
                         historyList.add(HistoryTemp.get(i));
-                        routineList.add(handler.getRoutine(HistoryTemp.get(i).getRoutineId()));
                     }
+                }
+                for(int i = 0; i < handler.getRoutineCount(); i++) {
+                    routineList.add(RoutineTemp.get(i));
                 }
                 
                 for (;;) {
-                    if(mAdapter != null){break;}
+                    if(mAdapter != null){ break; }
                 }  
 
                 mAdapter.notifyItemInserted(0);
@@ -166,11 +171,11 @@ public class DashboardFragment extends Fragment
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return routineList;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(LinkedList<Routine> routine) {
+        protected void onPostExecute(Void v) {
 
         }
     }
