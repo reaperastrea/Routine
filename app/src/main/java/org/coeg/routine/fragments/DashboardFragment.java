@@ -129,15 +129,16 @@ public class DashboardFragment extends Fragment
         lateCount = preferences.getLateCounter();
         onTimeCount = preferences.getOnTimeCounter();
 
-        routineCount = lateCount + onTimeCount;
+        routineCount = preferences.getRoutineCounter();
 
         if (routineCount != 0)
         {
             accuracy = (onTimeCount / routineCount) * 100;
-            return;
         }
-
-        accuracy = 0;
+        else
+        {
+            accuracy = 0;
+        }
     }
 
     private class DBAsync extends AsyncTask<Context, Integer, Void> {
