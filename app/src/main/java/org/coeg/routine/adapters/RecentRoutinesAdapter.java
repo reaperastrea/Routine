@@ -36,7 +36,7 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
 
     //Variable to dynamically control how late can the user be before a routine gets tagged "Missed"
     private int latetime;
-    private final int lateLimit = 20;
+    private final int lateLimit = 10;
 
     //formatter
     private static SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
