@@ -92,7 +92,7 @@ public class AlarmService extends Service
                         .putExtra("Routine ID", routineID)
                         .putExtra("Routine Name", routineName), 0);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(), 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, routineID, new Intent(), 0);
 
         notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 // To enable heads up notification

@@ -3,6 +3,7 @@ package org.coeg.routine.fragments;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,8 @@ public class AnalyticFragment extends Fragment
     private Integer lateCount;
     private Integer onTimeCount;
     private Integer routineCount;
-    private Integer accuracy;
+    private Integer historyCount;
+    private float   accuracy;
 
     public AnalyticFragment() { }
 
@@ -53,6 +55,15 @@ public class AnalyticFragment extends Fragment
     {
         // Defines the xml file for the fragment
         return inflater.inflate(R.layout.fragment_analytic, container, false);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.i("Analytics", "RESUMED");
+        FetchPreferences();
+        InitView(getView());
     }
 
     /**
@@ -75,12 +86,13 @@ public class AnalyticFragment extends Fragment
         txtRoutineCount.setText(routineCount.toString());
         txtOnTimeCount.setText(onTimeCount.toString());
         txtLateCount.setText(lateCount.toString());
-        txtAccuracy.setText(accuracy.toString());
+        String bapaklugelap = String.format("%f %%", accuracy);
+        txtAccuracy.setText(bapaklugelap);
         imgUser.setImageBitmap(profilePicture);
 
         //Play animation according
         //int accuracy = 100;         // FOR DEBUG PURPOSE //I've made the global variable version of this
-        PlayAnimation(accuracy);
+        PlayAnimation((int) accuracy);
     }
 
     /**
@@ -103,11 +115,13 @@ public class AnalyticFragment extends Fragment
         profilePicture = internalStorage.GetImageFromInternalStorage();
         lateCount = preferences.getLateCounter();
         onTimeCount = preferences.getOnTimeCounter();
-        routineCount = preferences.getRoutineCounter();
 
-        if (routineCount != 0)
+        routineCount = preferences.getRoutineCounter();
+        historyCount = preferences.getHistoryCounter();
+
+        if (historyCount != 0)
         {
-            accuracy = (onTimeCount / routineCount) * 100;
+            accuracy = ((float) onTimeCount / historyCount) * 100;
         }
         else
         {

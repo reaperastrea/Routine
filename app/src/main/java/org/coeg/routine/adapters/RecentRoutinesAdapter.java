@@ -1,10 +1,13 @@
 package org.coeg.routine.adapters;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -56,9 +59,20 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
     @Override
     public void onBindViewHolder(@NonNull RecentRoutinesAdapter.RoutinesViewHolder holder, int position) {
         History mHistory = mHistoryList.get(position);
-        Routine mRoutine = mRoutineList.get(mHistory.getRoutineId());
+
+        Routine mRoutine = new Routine();
+
+        // Get routine by id
+        for (Routine routine : mRoutineList)
+        {
+            if (mHistory.getRoutineId() == routine.getId())
+            {
+                mRoutine = routine;
+            }
+        }
+
         holder.tvName.setText(mRoutine.getName());
-        holder.tvTime.setText(Objects.requireNonNull(mRoutine.getTimeAsString()).substring(0,5));
+        holder.tvTime.setText(mRoutine.getTimeAsString().substring(0,5));
 
         try {
             latetime = countLate(mRoutine, mHistory);
@@ -68,15 +82,38 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
 
         //if statement to set color and text depending on how late the user is
         //todo:set color
-        if (latetime < 1){
+        if (latetime < 1)
+        {
             holder.tvStatus.setText("On Time");
-        }else if (latetime >= 1 && latetime < lateLimit){
+
+            int imageColor = ContextCompat.getColor(mContext, R.color.green_500);
+            holder.image.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN);
+            holder.tvName.setTextColor(ContextCompat.getColor(mContext, R.color.green_500));
+            holder.tvTime.setTextColor(ContextCompat.getColor(mContext, R.color.green_500));
+            holder.tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.green_600));
+        }
+        else if (latetime >= 1 && latetime < lateLimit)
+        {
             StringBuilder builder = new StringBuilder();
             builder.append(latetime);
             builder.append(" Minutes Late");
             holder.tvStatus.setText(builder.toString());
-        }else if (latetime >= lateLimit){
+
+            int imageColor = ContextCompat.getColor(mContext, R.color.yellow_500);
+            holder.image.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN);
+            holder.tvName.setTextColor(ContextCompat.getColor(mContext, R.color.yellow_500));
+            holder.tvTime.setTextColor(ContextCompat.getColor(mContext, R.color.yellow_500));
+            holder.tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.yellow_600));
+        }
+        else if (latetime >= lateLimit)
+        {
             holder.tvStatus.setText("Missed");
+
+            int imageColor = ContextCompat.getColor(mContext, R.color.red_500);
+            holder.image.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN);
+            holder.tvName.setTextColor(ContextCompat.getColor(mContext, R.color.red_500));
+            holder.tvTime.setTextColor(ContextCompat.getColor(mContext, R.color.red_500));
+            holder.tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.red_600));
         }
     }
 
@@ -89,6 +126,8 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
         private TextView tvStatus;
         private TextView tvName;
         private TextView tvTime;
+
+        private ImageView image;
         private RecentRoutinesAdapter mAdapter;
 
         public RoutinesViewHolder(@NonNull View itemView, RecentRoutinesAdapter adapter) {
@@ -97,6 +136,7 @@ public class RecentRoutinesAdapter extends RecyclerView.Adapter<RecentRoutinesAd
             tvStatus = (TextView) itemView.findViewById(R.id.txt_routineStatus);
             tvName = (TextView) itemView.findViewById(R.id.txt_routineName);
             tvTime = (TextView) itemView.findViewById(R.id.txt_routineTime);
+            image = itemView.findViewById(R.id.img_status);
             itemView.setOnClickListener(this);
         }
 

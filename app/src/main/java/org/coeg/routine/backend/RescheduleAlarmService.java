@@ -11,6 +11,9 @@ import java.util.LinkedList;
 
 public class RescheduleAlarmService extends Service
 {
+    private final static int REQ_ADD_SCHEDULE = 1;
+    private final static int REQ_DELETE_SCHEDULE = 2;
+
     private RoutinesHandler handler;
     private LinkedList<Routine> routines = new LinkedList<>();
 
@@ -25,7 +28,7 @@ public class RescheduleAlarmService extends Service
 
             for (Routine routine : routines)
             {
-                routine.schedule(context);
+                routine.schedule(context, 1);
             }
         };
 

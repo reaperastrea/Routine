@@ -25,6 +25,7 @@ import com.shawnlin.numberpicker.NumberPicker;
 
 import org.coeg.routine.R;
 import org.coeg.routine.backend.Days;
+import org.coeg.routine.backend.PreferencesStorage;
 import org.coeg.routine.backend.Routine;
 import org.coeg.routine.backend.RoutinesHandler;
 import org.coeg.routine.fragments.ListFragment;
@@ -39,6 +40,9 @@ import java.util.List;
 
 public class AddRoutineActivity extends AppCompatActivity
 {
+    private final static int REQ_ADD_SCHEDULE = 1;
+    private final static int REQ_DELETE_SCHEDULE = 2;
+
     private final static int REQUEST_ADD = 0;
     private final static int REQUEST_EDIT = 1;
 
@@ -319,7 +323,7 @@ public class AddRoutineActivity extends AppCompatActivity
 
         if (CheckAvailability(routine))
         {
-            routine.schedule(getApplicationContext());
+            incrementRoutineCount();
             new DBAsync().execute(routine);
         }
         else
@@ -399,6 +403,7 @@ public class AddRoutineActivity extends AppCompatActivity
         }
 
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        Routine oldRoutine = updatedRoutine;
         Date date = new Date();
         updatedRoutine.setName(routineName);
         updatedRoutine.setDays(days);
@@ -417,6 +422,8 @@ public class AddRoutineActivity extends AppCompatActivity
 
         if (CheckAvailability(updatedRoutine))
         {
+            oldRoutine.schedule(getApplicationContext(), REQ_DELETE_SCHEDULE);
+            updatedRoutine.schedule(getApplicationContext(), REQ_ADD_SCHEDULE);
             new UpdateDBAsync().execute(updatedRoutine);
         }
         else
@@ -431,7 +438,15 @@ public class AddRoutineActivity extends AppCompatActivity
 
     private void deleteRoutine()
     {
+        decrementRoutineCount();
+        updatedRoutine.schedule(getApplicationContext(), REQ_DELETE_SCHEDULE);
         new DeleteDBAsync().execute(updatedRoutine);
+    }
+
+    private void scheduleRoutine(int id, Routine routine)
+    {
+        routine.setId(id);
+        routine.schedule(getApplicationContext(), REQ_ADD_SCHEDULE);
     }
 
     /**
@@ -468,6 +483,20 @@ public class AddRoutineActivity extends AppCompatActivity
         return true;
     }
 
+    private void incrementRoutineCount()
+    {
+        PreferencesStorage preferences = PreferencesStorage.getInstance();
+        preferences.incrementRoutineCounter();
+        preferences.savePreferences();
+    }
+
+    private void decrementRoutineCount()
+    {
+        PreferencesStorage preferences = PreferencesStorage.getInstance();
+        preferences.decrementRoutineCounter();
+        preferences.savePreferences();
+    }
+
     private void Error()
     {
         Toast.makeText(
@@ -479,6 +508,9 @@ public class AddRoutineActivity extends AppCompatActivity
 
     private class DBAsync extends AsyncTask<Routine, Void, Void>
     {
+        Routine routine;
+        long id;
+
         @Override
         protected void onPreExecute()
         {
@@ -488,7 +520,8 @@ public class AddRoutineActivity extends AppCompatActivity
         @Override
         protected Void doInBackground(Routine... routine)
         {
-            handler.addRoutine(routine[0]);
+            this.routine = routine[0];
+            id = handler.addRoutine(routine[0]);
             return null;
         }
 
@@ -496,6 +529,8 @@ public class AddRoutineActivity extends AppCompatActivity
         protected void onPostExecute(Void unused)
         {
             super.onPostExecute(unused);
+            int routineID = (int) id;
+            scheduleRoutine(routineID, routine);
             Toast.makeText(
                     getApplicationContext(),
                     "Routine added!",

@@ -21,7 +21,7 @@ public interface RoutineDao {
     public void updateRoutine(Routine routine);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertRoutine(Routine routine);
+    public long insertRoutine(Routine routine);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertRoutine(Routine... routines);
