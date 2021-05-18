@@ -37,6 +37,8 @@ public class NotificationActionReceiver extends BroadcastReceiver
         int routineID = intent.getIntExtra("Routine ID", -1);
         String routineName = intent.getStringExtra("Routine Name");
 
+        Log.i("Notification Routine ID", "" + routineID);
+
         // Stop current service
         Intent intentServiceToStop = new Intent(context, AlarmService.class);
 
