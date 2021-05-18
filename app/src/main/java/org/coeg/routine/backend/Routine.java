@@ -19,7 +19,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Routine implements Serializable {
+public class Routine implements Serializable
+{
+    private final static int REQ_ADD_SCHEDULE = 1;
+    private final static int REQ_DELETE_SCHEDULE = 2;
+
     private static SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 
     @PrimaryKey (autoGenerate = true)
@@ -85,13 +89,15 @@ public class Routine implements Serializable {
     /**
      * Schedule routine to alarm manager
      * @param context application context
+     * @param requestCode either adding or delete schedule
      * @apiNote PLEASE CHECK TO MAKE SURE THERE AREN'T ANY OF THE SAME ROUTINE WITH
      * THE SAME DAY + HOURS IN THE DATABASE BEFORE CALLING THIS METHOD
      */
-    public void schedule(Context context)
+    public void schedule(Context context, int requestCode)
     {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
+        int alarmID = 0;
         Days[] days = getDays();
         int routineID = id;
         String routineName = name;
@@ -162,6 +168,7 @@ public class Routine implements Serializable {
             }
 
             // DEBUG LOG
+            Log.i("Routine", "Routine ID : " + routineID);
             Log.i("Routine", "Day     : " + scheduleTime.get(Calendar.DAY_OF_WEEK));
             Log.i("Routine", "Hours   : " + scheduleTime.get(Calendar.HOUR_OF_DAY));
             Log.i("Routine", "Minutes : " + scheduleTime.get(Calendar.MINUTE));
@@ -173,18 +180,32 @@ public class Routine implements Serializable {
             intent.putExtra("Routine ID", routineID);
             intent.putExtra("Routine Name", routineName);
 
-            PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, routineID, intent, 0);
+            PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, (routineID * 10) + alarmID, intent, 0);
 
             // Routine will always repeating
             int RUN_WEEKLY = 24 * 7 * 60 * 60 * 1000;
 
-            // Schedule to alarm manager
-            alarmManager.setRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    scheduleTime.getTimeInMillis(),
-                    RUN_WEEKLY,
-                    alarmPendingIntent
-            );
+            switch(requestCode)
+            {
+                case REQ_ADD_SCHEDULE:
+                    Log.i("Routine", "SCHEDULE ACTION ADD");
+                    // Schedule to alarm manager
+                    alarmManager.setRepeating(
+                            AlarmManager.RTC_WAKEUP,
+                            scheduleTime.getTimeInMillis(),
+                            RUN_WEEKLY,
+                            alarmPendingIntent
+                    );
+                    alarmID++;
+                    break;
+
+                case REQ_DELETE_SCHEDULE:
+                    Log.i("Routine", "SCHEDULE ACTION REMOVE");
+                    alarmManager.cancel(alarmPendingIntent);
+                    alarmID++;
+                    break;
+            }
+
         }
     }
 }

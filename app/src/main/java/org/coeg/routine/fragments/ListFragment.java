@@ -31,6 +31,8 @@ public class ListFragment extends Fragment
     private final static int REQUEST_ADD = 0;
     private final static int REQUEST_EDIT = 1;
 
+    View view;
+
     ImageButton         btnAddRoutine;
     RecyclerView        rvRoutineList;
     RoutineListAdapter  mAdapter;
@@ -52,8 +54,12 @@ public class ListFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+        if (view == null)
+        {
+            view = inflater.inflate(R.layout.fragment_list, container, false);
+        }
         // Defines the xml file for the fragment
-        return inflater.inflate(R.layout.fragment_list, container, false);
+        return view;
     }
 
     @Override
@@ -88,6 +94,7 @@ public class ListFragment extends Fragment
     public void onResume()
     {
         super.onResume();
+        Log.i("RESUMED", "RUN");
         routines = new LinkedList<>();
         new DBAsync().execute(this.getContext());
         InitView(getView());

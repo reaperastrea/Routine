@@ -51,8 +51,8 @@ public class RoutinesHandler {
 
     public List<History> getAllHistory() { return historyDao.getAll(); }
 
-    public void addRoutine(Routine routine) {
-        routineDao.insertRoutine(routine);
+    public long addRoutine(Routine routine) {
+        return routineDao.insertRoutine(routine);
     }
 
     public void addRoutine(Routine... routine) {

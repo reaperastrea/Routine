@@ -10,6 +10,8 @@ public class PreferencesStorage {
     private final String USER_KEY = "user-id";
     private final String USER_FULLNAME = "user-fullname";
     private final String USER_PROFILE_PICTURE_PATH = "profpic-path";
+    private final String COUNTER_ROUTINE = "counter-routine";
+    private final String COUNTER_HISTORY = "counter-history";
     private final String COUNTER_ONTIME = "counter-ontime";
     private final String COUNTER_LATE = "counter-late";
     private final String OPT_TELEMETRY = "enable-telemetry";
@@ -19,6 +21,8 @@ public class PreferencesStorage {
     private int userId;
     private String userFullName;
     private String profilePicturePath;
+    private int routineCounter;
+    private int historyCounter;
     private int onTimeCounter;
     private int lateCounter;
     private boolean enableTelemetry;
@@ -43,6 +47,8 @@ public class PreferencesStorage {
         preferencesEditor.putInt(USER_KEY, userId);
         preferencesEditor.putString(USER_FULLNAME, userFullName);
         preferencesEditor.putString(USER_PROFILE_PICTURE_PATH, profilePicturePath);
+        preferencesEditor.putInt(COUNTER_ROUTINE, routineCounter);
+        preferencesEditor.putInt(COUNTER_HISTORY, historyCounter);
         preferencesEditor.putInt(COUNTER_ONTIME, onTimeCounter);
         preferencesEditor.putInt(COUNTER_LATE, lateCounter);
         preferencesEditor.putBoolean(OPT_TELEMETRY, enableTelemetry);
@@ -62,6 +68,8 @@ public class PreferencesStorage {
         userFullName = preferences.getString(USER_FULLNAME, "");
         profilePicturePath = preferences.getString(USER_FULLNAME, ""); // TODO: Add found path for profile picture here
         // profilePicturePath = preferences.getString(USER_PROFILE_PICTURE_PATH, "/data/data/" + sharedPreferencesFile + "/" + userId + ".jpg");
+        routineCounter = preferences.getInt(COUNTER_ROUTINE, 0);
+        historyCounter = preferences.getInt(COUNTER_HISTORY, 0);
         onTimeCounter = preferences.getInt(COUNTER_ONTIME, 0);
         lateCounter = preferences.getInt(COUNTER_LATE, 0);
         enableTelemetry = preferences.getBoolean(OPT_TELEMETRY, true);
@@ -81,6 +89,8 @@ public class PreferencesStorage {
      */
     @Deprecated
     public String getProfilePicturePath() { return profilePicturePath; }
+    public int getRoutineCounter() { return routineCounter; }
+    public int getHistoryCounter() { return historyCounter; }
     public int getOnTimeCounter() { return onTimeCounter; }
     public int getLateCounter() { return lateCounter; }
     public boolean isTelemetryEnabled() { return enableTelemetry; }
@@ -90,6 +100,12 @@ public class PreferencesStorage {
     // only set private variables when new profile is created
     public void setUserId(int id) { userId = id; } // TODO: if telemetry is about to be uploaded to server, keep track of this ID.
     public void setFullName(String fullName) { userFullName = fullName; }
+    public void incrementRoutineCounter() { routineCounter++; }
+    public void incrementHistoryCounter() { historyCounter++; }
+    public void decrementRoutineCounter() {
+        if (routineCounter != 0)
+            routineCounter--;
+    }
     public void incrementOnTimeCounter() { onTimeCounter++; }
     public void incrementLateCounter() { lateCounter++; }
     public void setEnableTelemetry(boolean target) { enableTelemetry = target; }
@@ -99,6 +115,8 @@ public class PreferencesStorage {
         userId = -1;
         userFullName = "";
         profilePicturePath = "";
+        routineCounter = 0;
+        historyCounter = 0;
         onTimeCounter = 0;
         lateCounter = 0;
         enableTelemetry = true;

@@ -49,7 +49,10 @@ public class DashboardFragment extends Fragment
     private Integer lateCount;
     private Integer onTimeCount;
     private Integer routineCount;
+    private Integer historyCount;
     private float accuracy = 0;
+
+    private View view;
 
     RecentRoutinesAdapter mAdapter;
     private static LinkedList<Routine> routineList = new LinkedList<>();
@@ -73,7 +76,12 @@ public class DashboardFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // Defines the xml file for the fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        if (view == null)
+        {
+            view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        }
+        // Defines the xml file for the fragment
+        return view;
     }
 
     /**
@@ -129,15 +137,16 @@ public class DashboardFragment extends Fragment
         lateCount = preferences.getLateCounter();
         onTimeCount = preferences.getOnTimeCounter();
 
-        routineCount = lateCount + onTimeCount;
+        historyCount = preferences.getHistoryCounter();
 
-        if (routineCount != 0)
+        if (historyCount != 0)
         {
-            accuracy = (onTimeCount / routineCount) * 100;
-            return;
+            accuracy = ((float) onTimeCount / historyCount) * 100;
         }
-
-        accuracy = 0;
+        else
+        {
+            accuracy = 0;
+        }
     }
 
     private class DBAsync extends AsyncTask<Context, Integer, Void> {
@@ -149,6 +158,8 @@ public class DashboardFragment extends Fragment
         @Override
         protected Void doInBackground(Context... context) {
             try{
+                historyList = new LinkedList<>();
+                routineList = new LinkedList<>();
                 handler = new RoutinesHandler(context[0]);
                 LinkedList<History> HistoryTemp = new LinkedList<>(handler.getAllHistory());
                 LinkedList<Routine> RoutineTemp = new LinkedList<>(handler.getAllRoutines());
