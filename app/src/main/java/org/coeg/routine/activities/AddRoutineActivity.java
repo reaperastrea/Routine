@@ -25,6 +25,7 @@ import com.shawnlin.numberpicker.NumberPicker;
 
 import org.coeg.routine.R;
 import org.coeg.routine.backend.Days;
+import org.coeg.routine.backend.History;
 import org.coeg.routine.backend.PreferencesStorage;
 import org.coeg.routine.backend.Routine;
 import org.coeg.routine.backend.RoutinesHandler;
@@ -581,6 +582,17 @@ public class AddRoutineActivity extends AppCompatActivity
         @Override
         protected Void doInBackground(Routine... routine)
         {
+            LinkedList<History> historyList = new LinkedList<>(handler.getAllHistory());
+
+            // Also delete history
+            for (History history : historyList)
+            {
+                if (history.getRoutineId() == routine[0].getId())
+                {
+                    handler.deleteHistory(history);
+                }
+            }
+
             handler.deleteRoutine(routine[0]);
             return null;
         }

@@ -80,17 +80,18 @@ public class AlarmService extends Service
         long[] vibratePattern = new long[] { 500, 500, 500 };
 
         Intent receiver = new Intent(this, NotificationActionReceiver.class);
+
         PendingIntent pOkIntent = PendingIntent.getBroadcast(
                 this, ACTION_OK, receiver
                         .putExtra("Request Code", ACTION_OK)
                         .putExtra("Routine ID", routineID)
-                        .putExtra("Routine Name", routineName), 0);
+                        .putExtra("Routine Name", routineName), PendingIntent.FLAG_UPDATE_CURRENT);
 
         PendingIntent pSnoozeIntent = PendingIntent.getBroadcast(
                 this, ACTION_SNOOZE, receiver
                         .putExtra("Request Code", ACTION_SNOOZE)
                         .putExtra("Routine ID", routineID)
-                        .putExtra("Routine Name", routineName), 0);
+                        .putExtra("Routine Name", routineName), PendingIntent.FLAG_UPDATE_CURRENT);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, routineID, new Intent(), 0);
 
