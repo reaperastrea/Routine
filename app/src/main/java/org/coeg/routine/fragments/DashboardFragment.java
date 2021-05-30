@@ -32,7 +32,9 @@ import org.coeg.routine.backend.RoutinesHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 
 public class DashboardFragment extends Fragment
 {
@@ -59,6 +61,7 @@ public class DashboardFragment extends Fragment
     private static LinkedList<History> historyList = new LinkedList<>();
     private RoutinesHandler handler;
     private static SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+    private static SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");
 
     public DashboardFragment() { }
 
@@ -164,10 +167,38 @@ public class DashboardFragment extends Fragment
                 LinkedList<History> HistoryTemp = new LinkedList<>(handler.getAllHistory());
                 LinkedList<Routine> RoutineTemp = new LinkedList<>(handler.getAllRoutines());
                 Log.i(getClass().toString(), "History size = " + RoutineTemp.size());
-                for(int i = 0; i < handler.getHistoryCount(); i++){
-                    if(HistoryTemp.get(i).getDateAsString().equals(dateFormatter.format(Calendar.getInstance().getTime())) ){
+                for(int i = 0; i < handler.getHistoryCount(); i++)
+                {
+                    Calendar today = Calendar.getInstance();
+                    today.setTimeInMillis(System.currentTimeMillis());
+
+                    String historyTimeString = HistoryTemp.get(i).getTimeAsString();
+                    String historyDateString = HistoryTemp.get(i).getDateAsString();
+
+                    Date historyDate = dateFormatter.parse(historyDateString);
+                    Date historyTime = timeFormatter.parse(historyTimeString);
+
+                    Calendar historyDateCal = Calendar.getInstance();
+                    historyDateCal.setTime(historyDate);
+
+                    Calendar historyCalendar = Calendar.getInstance();
+                    historyCalendar.setTime(historyTime);
+                    historyCalendar.set(Calendar.DAY_OF_MONTH, historyDateCal.get(Calendar.DAY_OF_MONTH));
+
+                    long difference_In_Time = today.getTime().getTime() - historyCalendar.getTime().getTime();
+
+                    // Find difference in date
+                    long difference_In_Hours = (difference_In_Time / (1000 * 60 * 60)) % 24;
+
+                    if (difference_In_Hours <= 24)
+                    {
                         historyList.add(HistoryTemp.get(i));
                     }
+
+//                    if(HistoryTemp.get(i).getDateAsString().equals(dateFormatter.format(Calendar.getInstance().getTime())) )
+//                    {
+//                        historyList.add(HistoryTemp.get(i));
+//                    }
                 }
                 for(int i = 0; i < handler.getRoutineCount(); i++) {
                     routineList.add(RoutineTemp.get(i));
