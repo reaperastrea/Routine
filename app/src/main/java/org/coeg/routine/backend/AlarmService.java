@@ -22,12 +22,16 @@ import androidx.core.app.NotificationManagerCompat;
 import org.coeg.routine.R;
 import org.coeg.routine.activities.MainActivity;
 
+import java.util.Calendar;
+
 public class AlarmService extends Service
 {
     public static final String CHANNEL_ID = "ALARM_SERVICE_CHANNEL";
     public static final String CHANNEL_NAME = "Routine";
     public static final String CHANNEL_DESC = "Routine Remainder";
     public static final int NOTIFICATION_ID = 1337;
+
+    private final static int REQ_ADD_SCHEDULE = 1;
 
     private static final int ACTION_OK = 0;
     private static final int ACTION_SNOOZE = 1;
@@ -36,6 +40,9 @@ public class AlarmService extends Service
     private Notification notification;
 
     private MediaPlayer mediaPlayer;
+
+    private Routine routine;
+    private RoutinesHandler handler;
 
     @Override
     public void onCreate()
@@ -76,6 +83,9 @@ public class AlarmService extends Service
     {
         String routineName = intent.getStringExtra("Routine Name");
         int routineID = intent.getIntExtra("Routine ID", -1);
+
+        // Reschedule to alarm manager (for exact fire timing)
+        reScheduleRepeat(routineID);
 
         long[] vibratePattern = new long[] { 500, 500, 500 };
 
@@ -126,5 +136,57 @@ public class AlarmService extends Service
 
         Log.i("Routine", "ALARM SERVICE RUNNING");
         Log.i("Routine ID", "Routine ID : " + routineID);
+    }
+
+    private void reScheduleRepeat(int routineID)
+    {
+        // Get system current day
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
+
+        switch(currentDay) {
+            case Calendar.MONDAY:
+                runThreadSchedule(routineID, Days.Monday);
+                break;
+
+            case Calendar.TUESDAY:
+                runThreadSchedule(routineID, Days.Tuesday);
+                break;
+
+            case Calendar.WEDNESDAY:
+                runThreadSchedule(routineID, Days.Wednesday);
+                break;
+
+            case Calendar.THURSDAY:
+                runThreadSchedule(routineID, Days.Thursday);
+                break;
+
+            case Calendar.FRIDAY:
+                runThreadSchedule(routineID, Days.Friday);
+                break;
+
+            case Calendar.SATURDAY:
+                runThreadSchedule(routineID, Days.Saturday);
+                break;
+
+            case Calendar.SUNDAY:
+                runThreadSchedule(routineID, Days.Sunday);
+                break;
+        }
+    }
+
+    private void runThreadSchedule(int routineID, Days dayToSchedule)
+    {
+        Runnable r = () -> {
+            handler = new RoutinesHandler(getApplicationContext());
+            routine = handler.getRoutine(routineID);
+
+            routine.reScheduleFire(getApplicationContext(), REQ_ADD_SCHEDULE, dayToSchedule);
+        };
+
+        Thread t = new Thread(r);
+        t.start();
     }
 }
