@@ -184,13 +184,16 @@ public class DashboardFragment extends Fragment
                     Calendar historyCalendar = Calendar.getInstance();
                     historyCalendar.setTime(historyTime);
                     historyCalendar.set(Calendar.DAY_OF_MONTH, historyDateCal.get(Calendar.DAY_OF_MONTH));
+                    historyCalendar.set(Calendar.MONTH, historyDateCal.get(Calendar.MONTH));
+                    historyCalendar.set(Calendar.YEAR, historyDateCal.get(Calendar.YEAR));
 
                     long difference_In_Time = today.getTime().getTime() - historyCalendar.getTime().getTime();
 
                     // Find difference in date
                     long difference_In_Hours = (difference_In_Time / (1000 * 60 * 60)) % 24;
+                    long difference_In_Days = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365;
 
-                    if (difference_In_Hours <= 24)
+                    if (difference_In_Hours <= 24 && difference_In_Days < 1)
                     {
                         historyList.add(HistoryTemp.get(i));
                     }
