@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.core.app.NotificationManagerCompat;
@@ -113,11 +114,21 @@ public class NotificationActionReceiver extends BroadcastReceiver
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, routineID, intent, 0);
 
         // Set another alarm
-        alarmManager.setExact(
-                AlarmManager.RTC_WAKEUP,
-                remindTime.getTimeInMillis(),
-                alarmPendingIntent
-        );
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    remindTime.getTimeInMillis(),
+                    alarmPendingIntent
+            );
+        }
+        else
+        {
+            alarmManager.setExact(
+                    AlarmManager.RTC_WAKEUP,
+                    remindTime.getTimeInMillis(),
+                    alarmPendingIntent
+            );
+        }
     }
 
     private void timeCheck(int routineID, Calendar responseTime)
