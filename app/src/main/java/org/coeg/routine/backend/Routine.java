@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.room.Entity;
@@ -189,12 +190,24 @@ public class Routine implements Serializable
             {
                 case REQ_ADD_SCHEDULE:
                     Log.i("Routine", "SCHEDULE ACTION ADD");
+
                     // Schedule to alarm manager
-                    alarmManager.setExact(
-                            AlarmManager.RTC_WAKEUP,
-                            scheduleTime.getTimeInMillis(),
-                            alarmPendingIntent
-                    );
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        alarmManager.setExactAndAllowWhileIdle(
+                                AlarmManager.RTC_WAKEUP,
+                                scheduleTime.getTimeInMillis(),
+                                alarmPendingIntent
+                        );
+                    }
+                    else
+                    {
+                        alarmManager.setExact(
+                                AlarmManager.RTC_WAKEUP,
+                                scheduleTime.getTimeInMillis(),
+                                alarmPendingIntent
+                        );
+                    }
+
                     alarmID++;
                     break;
 
@@ -307,12 +320,25 @@ public class Routine implements Serializable
 
             Log.i("Routine", "SCHEDULE ACTION ADD");
             // Schedule to alarm manager
-            alarmManager.setExact(
-                    AlarmManager.RTC_WAKEUP,
-                    scheduleTime.getTimeInMillis(),
-                    alarmPendingIntent
-            );
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(
+                        AlarmManager.RTC_WAKEUP,
+                        scheduleTime.getTimeInMillis(),
+                        alarmPendingIntent
+                );
+            }
+            else
+            {
+                alarmManager.setExact(
+                        AlarmManager.RTC_WAKEUP,
+                        scheduleTime.getTimeInMillis(),
+                        alarmPendingIntent
+                );
+            }
+
             alarmID++;
+
             break;
         }
     }
